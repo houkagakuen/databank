@@ -55,13 +55,13 @@
             font-size: 0.9em;
             color: #333;
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-end; /* 右寄せ */
             align-items: center;
-            flex-grow: 1;
+            gap: 10px; /* アイテムの間隔を縮める */
+            margin-top: -10px; /* 上に移動 */
         }
 
         .menu span {
-            margin-left: 15px;
             white-space: nowrap; /* テキストが折り返されないようにする */
         }
     </style>
