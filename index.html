@@ -3,64 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>蜂窩学園</title> <!-- サイトの名前 -->
-    <link rel="icon" href="https://houka.gakuen/database/logo.png" type="image/png"> <!-- ファビコン -->
+    <title>蜂窩学園データバンク</title>
+    <!-- ファビコン設定 -->
+    <link rel="icon" href="https://houkagakuen.github.io/databank/logo.png" type="image/png">
     <style>
-        body {
+        /* リセットCSS */
+        * {
             margin: 0;
-            font-family: Arial, sans-serif;
+            padding: 0;
+            box-sizing: border-box;
         }
+
+        /* 全体のスタイル */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        /* ヘッダーのスタイル */
         header {
-            width: 100%;
-            background-color: #333;
-            color: white;
-            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* 上下の要素をスペースで分ける */
+            background-color: #f9f9f9;
+            padding: 10px 20px;
+            border-bottom: 2px solid #ddd;
+            height: 70px; /* ヘッダーの高さを固定 */
         }
-        table {
-            width: 100%;
-            border-collapse: collapse;
+
+        /* ロゴとタイトルのスタイル */
+        .logo-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
-        td {
-            width: 50%; /* 2×2に分割 */
-            padding: 8px;
-            text-align: center;
-            border: 1px solid #ddd;
-            height: 33px; /* 各セルの高さを設定 */
+
+        .logo-title img {
+            width: 40px;
+            height: auto;
         }
-        td:first-child {
-            background-color: #444;
+
+        .logo-title h1 {
+            font-family: 'serif';
+            font-size: 1.8em;
+            color: #006400;
         }
-        td:nth-child(2) {
-            background-color: #555;
+
+        /* メニューのスタイル */
+        .menu {
+            font-size: 0.9em;
+            color: #333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-grow: 1;
         }
-        td:nth-child(3) {
-            background-color: #666;
-        }
-        td:nth-child(4) {
-            background-color: #777;
+
+        .menu span {
+            margin-left: 15px;
+            white-space: nowrap; /* テキストが折り返されないようにする */
         }
     </style>
 </head>
 <body>
 
-<header>
-    <table>
-        <tr>
-            <td>セル1</td>
-            <td>セル2</td>
-        </tr>
-        <tr>
-            <td>セル3</td>
-            <td>セル4</td>
-        </tr>
-    </table>
-</header>
-
-<!-- コンテンツ部分 -->
-<div style="padding: 20px;">
-    <h1>コンテンツがここに入ります</h1>
-    <p>これはサンプルのコンテンツです。</p>
-</div>
+    <!-- ヘッダー -->
+    <header>
+        <div class="logo-title">
+            <img src="https://houkagakuen.github.io/databank/logo.png" alt="蜂窩学園ロゴ">
+            <h1>蜂窩学園データバンク</h1>
+        </div>
+        <div class="menu">
+            <span>ファイル(F)</span>
+            <span>ウィンドウ(W)</span>
+            <span>職員連絡(C)</span>
+            <span>生徒管理(A)</span>
+            <span>カメラ(K)</span>
+            <span>マニュアル(M)</span>
+        </div>
+    </header>
 
 </body>
 </html>
