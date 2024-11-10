@@ -22,7 +22,7 @@
             border-collapse: collapse;
         }
         td {
-            width: 25%; /* 4つのセルを均等に分割 */
+            width: 50%; /* 2×2に分割 */
             padding: 10px;
             text-align: center;
             border: 1px solid #ddd;
@@ -36,7 +36,7 @@
         td:nth-child(3) {
             background-color: #666;
         }
-        td:last-child {
+        td:nth-child(4) {
             background-color: #777;
         }
     </style>
@@ -48,6 +48,8 @@
         <tr>
             <td>セル1</td>
             <td>セル2</td>
+        </tr>
+        <tr>
             <td>セル3</td>
             <td>セル4</td>
         </tr>
