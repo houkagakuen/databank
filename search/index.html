@@ -1,1 +1,227 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>データベース検索</title>
+  <style>
+    body {
+      background-color: #e0f2e0;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+    form {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .form-group {
+      display: flex;
+      margin-bottom: 10px;
+    }
+    .form-group label {
+      flex: 1;
+      text-align: right;
+      margin-right: 10px;
+    }
+    .form-group input, .form-group select {
+      flex: 2;
+    }
+    .button-group {
+      text-align: center;
+      margin-top: 20px;
+    }
+    .result {
+      max-width: 900px;
+      margin: 20px auto;
+      border: 1px solid #ccc;
+      padding: 10px;
+      background-color: #fff;
+    }
+    .result img {
+      max-width: 100px;
+      display: block;
+      float: left;
+      margin-right: 20px;
+    }
+    .result div {
+      overflow: hidden;
+    }
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      color: #fff;
+      z-index: 1000;
+    }
+    .overlay-content {
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 80%;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .overlay-content iframe {
+      width: 100%;
+      height: 500px;
+      border: none;
+    }
+    .close-button {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      background: #fff;
+      color: #000;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>データベース検索</h1>
+  <form id="searchForm">
+    <div class="form-group">
+      <label for="lastName">苗字:</label>
+      <input type="text" id="lastName" name="lastName">
+    </div>
+    <div class="form-group">
+      <label for="firstName">名前:</label>
+      <input type="text" id="firstName" name="firstName">
+    </div>
+    <div class="form-group">
+      <label for="lastNameKana">苗字(カナ):</label>
+      <input type="text" id="lastNameKana" name="lastNameKana">
+    </div>
+    <div class="form-group">
+      <label for="firstNameKana">名前(カナ):</label>
+      <input type="text" id="firstNameKana" name="firstNameKana">
+    </div>
+    <div class="form-group">
+      <label for="gender">性別:</label>
+      <select id="gender" name="gender">
+        <option value="">選択してください</option>
+        <option value="オス">オス</option>
+        <option value="メス">メス</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="bloodType">血液:</label>
+      <select id="bloodType" name="bloodType">
+        <option value="">選択してください</option>
+        <option value="A">A</option>
+        <option value="B">B</option>
+        <option value="AB">AB</option>
+        <option value="O">O</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="rank">階級:</label>
+      <select id="rank" name="rank">
+        <option value="">選択してください</option>
+        <option value="A">A</option>
+        <option value="B">B</option>
+        <option value="C">C</option>
+        <option value="D">D</option>
+        <option value="E">E</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="id">呼称番号:</label>
+      <input type="text" id="id" name="id">
+    </div>
+    <div class="button-group">
+      <button type="button" onclick="search()">検索</button>
+    </div>
+  </form>
+  <div id="resultContainer"></div>
+  <div class="overlay" id="overlay">
+    <div class="overlay-content">
+      <button class="close-button" onclick="closeOverlay()">×</button>
+      <iframe id="overlayIframe"></iframe>
+    </div>
+  </div>
+  <script>
+    const students = [
+      {
+        id: "204",
+        lastName: "小泉",
+        firstName: "十和子",
+        lastNameKana: "コイズミ",
+        firstNameKana: "トワコ",
+        gender: "メス",
+        bloodType: "A",
+        rank: "E",
+        birth: "2009/12/28",
+        crime: "売春防止法違反",
+        entry: "2024/6",
+        release: "2027/6",
+        image: "https://houkagakuen.github.io/databank/search/204-小泉十和子/IMG_0770.jpeg",
+        site: "https://houkagakuen.github.io/databank/search/204-小泉十和子"
+      },
+      {
+        id: "301",
+        lastName: "小泉",
+        firstName: "凛桜",
+        lastNameKana: "コイズミ",
+        firstNameKana: "リオ",
+        gender: "メス",
+        bloodType: "B",
+        rank: "A",
+        birth: "2009/7/13",
+        crime: "窃盗",
+        entry: "2021/3",
+        release: "2030/3",
+        image: "https://houkagakuen.github.io/databank/search/301-小泉凛桜/IMG_0771.jpeg",
+        site: "https://houkagakuen.github.io/databank/search/301-小泉凛桜"
+      }
+    ];
 
+    function search() {
+      const resultContainer = document.getElementById("resultContainer");
+      resultContainer.innerHTML = "";
+      const filtered = students; // フィルター処理を追加可能
+
+      if (filtered.length > 0) {
+        filtered.forEach(student => {
+          const div = document.createElement("div");
+          div.className = "result";
+          div.innerHTML = `
+            <img src="${student.image}" onclick="openOverlay('${student.site}')" alt="肖像">
+            <div>
+              <p>番号: ${student.id}</p>
+              <p>氏名: ${student.lastName} ${student.firstName}</p>
+              <p>カナ: ${student.lastNameKana} ${student.firstNameKana}</p>
+              <p>性別: ${student.gender}</p>
+              <p>血液: ${student.bloodType}</p>
+              <p>階級: ${student.rank}</p>
+              <p>罪名: ${student.crime}</p>
+            </div>
+          `;
+          resultContainer.appendChild(div);
+        });
+      } else {
+        resultContainer.innerHTML = "<p>該当する生徒は登録されていません。</p>";
+      }
+    }
+
+    function openOverlay(url) {
+      const overlay = document.getElementById("overlay");
+      const iframe = document.getElementById("overlayIframe");
+      overlay.style.display = "block";
+      iframe.src = url;
+    }
+
+    function closeOverlay() {
+      const overlay = document.getElementById("overlay");
+      const iframe = document.getElementById("overlayIframe");
+      overlay.style.display = "none";
+      iframe.src = "";
+    }
+  </script>
+</body>
+</html>
