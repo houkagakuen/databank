@@ -3,239 +3,186 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>データベース検索サイト</title>
+    <title>生徒検索サイト</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
+            background-color: #f7f7f7;
+            margin: 0;
             padding: 0;
         }
-        .form-container {
-            border-bottom: 2px solid #000;
-            padding-bottom: 20px;
-            margin-bottom: 20px;
+        header {
+            background-color: #2c3e50;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            font-size: 24px;
         }
-        .form-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-        .form-row label {
-            white-space: nowrap;
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
             font-weight: bold;
-            margin-right: 10px;
+            margin-bottom: 5px;
         }
-        .form-row input, .form-row select {
-            height: 30px;
-            font-size: 14px;
-            padding: 0 5px;
-            border: 1px solid #ccc;
-            width: 150px;
-            border-radius: 0; /* 角を直角に */
-        }
-        .form-row input.long {
-            width: 300px;
-        }
-        .form-row button {
-            height: 36px;
-            font-size: 14px;
-            background-color: #006400;
-            color: white;
-            border: none;
-            cursor: pointer;
-            padding: 0 15px;
-            border-radius: 0; /* 角を直角に */
-        }
-        .form-row button:hover {
-            background-color: #004d00;
-        }
-        .result-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-        .result-card {
-            width: calc(50% - 20px);
-            border: 1px solid #ccc;
+        .form-group input, .form-group select {
+            width: 100%;
             padding: 10px;
-            display: flex;
-            align-items: center;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
         }
-        .result-card img {
-            width: 80px;
-            height: 80px;
-            margin-right: 10px;
+        .form-group input[type="number"] {
+            -moz-appearance: textfield;
+        }
+        button {
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
             cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        table th {
+            background-color: #f8f9fa;
         }
     </style>
-    <script>
-        const students = [
-            {
-                id: 204,
-                lastName: "小泉",
-                firstName: "十和子",
-                lastKana: "コイズミ",
-                firstKana: "トワコ",
-                gender: "メス",
-                bloodType: "A",
-                rank: "E",
-                crime: "売春防止法違反",
-                imageUrl: "https://houkagakuen.github.io/databank/search/204-小泉十和子/IMG_0770.jpeg",
-                siteUrl: "https://houkagakuen.github.io/databank/search/204-小泉十和子",
-                birthYear: 2009,
-                birthMonth: 12,
-                birthDay: 28,
-                admissionYear: 2024,
-                admissionMonth: 6,
-                releaseYear: 2027,
-                releaseMonth: 6
-            },
-            {
-                id: 301,
-                lastName: "小泉",
-                firstName: "凛桜",
-                lastKana: "コイズミ",
-                firstKana: "リオ",
-                gender: "メス",
-                bloodType: "B",
-                rank: "A",
-                crime: "窃盗",
-                imageUrl: "https://houkagakuen.github.io/databank/search/301-小泉凛桜/IMG_0771.jpeg",
-                siteUrl: "https://houkagakuen.github.io/databank/search/301-小泉凛桜",
-                birthYear: 2009,
-                birthMonth: 7,
-                birthDay: 13,
-                admissionYear: 2021,
-                admissionMonth: 3,
-                releaseYear: 2030,
-                releaseMonth: 3
-            }
-        ];
-
-        function search() {
-            const resultContainer = document.getElementById("resultContainer");
-            resultContainer.innerHTML = "";
-
-            const filters = {
-                lastName: document.getElementById("lastName").value,
-                firstName: document.getElementById("firstName").value,
-                lastKana: document.getElementById("lastKana").value,
-                firstKana: document.getElementById("firstKana").value,
-                gender: document.getElementById("gender").value,
-                bloodType: document.getElementById("bloodType").value,
-                rank: document.getElementById("rank").value,
-                birthYear: document.getElementById("birthYear").value,
-                birthMonth: document.getElementById("birthMonth").value,
-                birthDay: document.getElementById("birthDay").value,
-                crime: document.getElementById("crime").value,
-                admissionYear: document.getElementById("admissionYear").value,
-                admissionMonth: document.getElementById("admissionMonth").value,
-                releaseYear: document.getElementById("releaseYear").value,
-                releaseMonth: document.getElementById("releaseMonth").value,
-            };
-
-            const filtered = students.filter(student => {
-                return Object.keys(filters).every(key => {
-                    if (!filters[key]) return true;
-                    return student[key]?.toString().includes(filters[key]);
-                });
-            });
-
-            if (filtered.length === 0) {
-                resultContainer.innerHTML = "<p>該当する生徒は登録されていません。</p>";
-                return;
-            }
-
-            filtered.sort((a, b) => a.id - b.id);
-
-            filtered.forEach(student => {
-                const card = document.createElement("div");
-                card.className = "result-card";
-
-                const img = document.createElement("img");
-                img.src = student.imageUrl;
-                img.alt = `${student.lastName} ${student.firstName}`;
-                img.onclick = () => openOverlay(student.siteUrl);
-
-                const info = document.createElement("div");
-                info.innerHTML = `
-                    <p>番号：${student.id}</p>
-                    <p>氏名：${student.lastName} ${student.firstName}</p>
-                    <p>カナ：${student.lastKana} ${student.firstKana}</p>
-                    <p>性別：${student.gender}</p>
-                    <p>血液：${student.bloodType}</p>
-                    <p>階級：${student.rank}</p>
-                    <p>罪名：${student.crime}</p>
-                `;
-
-                card.appendChild(img);
-                card.appendChild(info);
-                resultContainer.appendChild(card);
-            });
-        }
-    </script>
 </head>
 <body>
-    <div class="form-container">
-        <!-- 検索欄 -->
-        <div class="form-row">
-            <label for="lastName">苗字:</label>
-            <input type="text" id="lastName">
-            <label for="firstName">名前:</label>
-            <input type="text" id="firstName">
-            <label for="lastKana">苗字(カナ):</label>
-            <input type="text" id="lastKana">
-            <label for="firstKana">名前(カナ):</label>
-            <input type="text" id="firstKana">
-        </div>
-        <div class="form-row">
-            <label for="gender">性別:</label>
-            <select id="gender">
-                <option value="">選択</option>
-                <option value="オス">オス</option>
-                <option value="メス">メス</option>
-            </select>
-            <label for="bloodType">血液型:</label>
-            <select id="bloodType">
-                <option value="">選択</option>
-                <option value="A">A</option>
-                <option value="B">B</option>
-                <option value="O">O</option>
-                <option value="AB">AB</option>
-            </select>
-            <label for="rank">階級:</label>
-            <select id="rank">
-                <option value="">選択</option>
-                <option value="A">A</option>
-                <option value="B">B</option>
-                <option value="C">C</option>
-                <option value="D">D</option>
-                <option value="E">E</option>
-            </select>
-        </div>
-        <div class="form-row">
-            <label for="birthYear">生年:</label>
-            <input type="number" id="birthYear" placeholder="例: 2000">
-            <label for="birthMonth">生月:</label>
-            <input type="number" id="birthMonth" placeholder="例: 12">
-            <label for="birthDay">生日:</label>
-            <input type="number" id="birthDay" placeholder="例: 25">
-            <label for="crime">罪名:</label>
-            <input type="text" id="crime" class="long">
-        </div>
-        <div class="form-row">
-            <label for="admissionYear">入年:</label>
-            <input type="number" id="admissionYear">
-            <label for="admissionMonth">入月:</label>
-            <input type="number" id="admissionMonth">
-            <label for="releaseYear">退年:</label>
-            <input type="number" id="releaseYear">
-            <label for="releaseMonth">退月:</label>
-            <input type="number" id="releaseMonth">
-            <button onclick="search()">検索</button>
-        </div>
+    <header>生徒検索サイト</header>
+    <div class="container">
+        <h2>検索フォーム</h2>
+        <form id="searchForm">
+            <div class="form-group">
+                <label for="lastName">苗字</label>
+                <input type="text" id="lastName" name="lastName" placeholder="例: 山田">
+            </div>
+            <div class="form-group">
+                <label for="firstName">名前</label>
+                <input type="text" id="firstName" name="firstName" placeholder="例: 太郎">
+            </div>
+            <div class="form-group">
+                <label for="lastNameKana">苗字（カナ）</label>
+                <input type="text" id="lastNameKana" name="lastNameKana" placeholder="例: ヤマダ">
+            </div>
+            <div class="form-group">
+                <label for="firstNameKana">名前（カナ）</label>
+                <input type="text" id="firstNameKana" name="firstNameKana" placeholder="例: タロウ">
+            </div>
+            <div class="form-group">
+                <label for="gender">性別</label>
+                <select id="gender" name="gender">
+                    <option value="">--選択してください--</option>
+                    <option value="male">オス</option>
+                    <option value="female">メス</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="bloodType">血液型</label>
+                <select id="bloodType" name="bloodType">
+                    <option value="">--選択してください--</option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="O">O</option>
+                    <option value="AB">AB</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="rank">階級</label>
+                <select id="rank" name="rank">
+                    <option value="">--選択してください--</option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                    <option value="E">E</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="identifier">呼称番号</label>
+                <input type="text" id="identifier" name="identifier" placeholder="例: 12345">
+            </div>
+            <div class="form-group">
+                <label for="crime">罪名</label>
+                <input type="text" id="crime" name="crime" placeholder="例: 窃盗">
+            </div>
+            <div class="form-group">
+                <label for="birthYear">生年</label>
+                <input type="number" id="birthYear" name="birthYear" placeholder="例: 2000">
+            </div>
+            <div class="form-group">
+                <label for="birthMonth">生月</label>
+                <input type="number" id="birthMonth" name="birthMonth" placeholder="例: 5">
+            </div>
+            <div class="form-group">
+                <label for="birthDay">生日</label>
+                <input type="number" id="birthDay" name="birthDay" placeholder="例: 15">
+            </div>
+            <div class="form-group">
+                <label for="admissionYear">入年</label>
+                <input type="number" id="admissionYear" name="admissionYear" placeholder="例: 2023">
+            </div>
+            <div class="form-group">
+                <label for="admissionMonth">入月</label>
+                <input type="number" id="admissionMonth" name="admissionMonth" placeholder="例: 4">
+            </div>
+            <div class="form-group">
+                <label for="releaseYear">退年</label>
+                <input type="number" id="releaseYear" name="releaseYear" placeholder="例: 2025">
+            </div>
+            <div class="form-group">
+                <label for="releaseMonth">退月</label>
+                <input type="number" id="releaseMonth" name="releaseMonth" placeholder="例: 3">
+            </div>
+            <button type="submit">検索</button>
+        </form>
+        
+        <h2>検索結果</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>苗字</th>
+                    <th>名前</th>
+                    <th>性別</th>
+                    <th>階級</th>
+                    <th>罪名</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- 検索結果がここに表示されます -->
+                <tr>
+                    <td>山田</td>
+                    <td>太郎</td>
+                    <td>オス</td>
+                    <td>A</td>
+                    <td>窃盗</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
-    <div class="result-container" id="resultContainer"></div>
 </body>
 </html>
