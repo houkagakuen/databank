@@ -1,181 +1,182 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>データベース検索</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f9f9f9;
-    }
-    .container {
-      width: 80%;
-      margin: 20px auto;
-      background: #fff;
-      padding: 20px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-    }
-    h1 {
-      text-align: center;
-    }
-    .form-group {
-      display: flex;
-      flex-wrap: wrap;
-      margin-bottom: 10px;
-    }
-    .form-group label {
-      width: 20%;
-      margin-bottom: 5px;
-    }
-    .form-group input, .form-group select {
-      width: 75%;
-      padding: 5px;
-    }
-    .button-group {
-      text-align: center;
-    }
-    .results {
-      margin-top: 20px;
-    }
-    .results .result {
-      display: flex;
-      align-items: center;
-      padding: 10px;
-      border: 1px solid #ccc;
-      margin-bottom: 10px;
-    }
-    .results img {
-      width: 100px;
-      height: 100px;
-      object-fit: cover;
-      margin-right: 10px;
-    }
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.8);
-      justify-content: center;
-      align-items: center;
-    }
-    .modal iframe {
-      width: 80%;
-      height: 80%;
-      border: none;
-    }
-    .modal .close-btn {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      background: red;
-      color: white;
-      border: none;
-      padding: 10px;
-      cursor: pointer;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>データベース検索サイト</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+        }
+        .form-container, .result-container {
+            margin-bottom: 20px;
+        }
+        .form-container {
+            border-bottom: 2px solid #000;
+            padding-bottom: 20px;
+        }
+        .form-row {
+            display: flex;
+            margin-bottom: 10px;
+        }
+        .form-row input, .form-row select {
+            margin-right: 10px;
+        }
+        .result-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .result-card {
+            width: calc(50% - 20px);
+            border: 1px solid #ccc;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+        }
+        .result-card img {
+            width: 80px;
+            height: 80px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .overlay-content {
+            background: #fff;
+            padding: 20px;
+            width: 80%;
+            position: relative;
+        }
+        .overlay-content iframe {
+            width: 100%;
+            height: 500px;
+        }
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: red;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        const students = [
+            {
+                id: 204,
+                lastName: "小泉",
+                firstName: "十和子",
+                lastKana: "コイズミ",
+                firstKana: "トワコ",
+                gender: "メス",
+                bloodType: "A",
+                rank: "E",
+                crime: "売春防止法違反",
+                imageUrl: "https://houkagakuen.github.io/databank/search/204-小泉十和子/IMG_0770.jpeg",
+                siteUrl: "https://houkagakuen.github.io/databank/search/204-小泉十和子"
+            },
+            {
+                id: 301,
+                lastName: "小泉",
+                firstName: "凛桜",
+                lastKana: "コイズミ",
+                firstKana: "リオ",
+                gender: "メス",
+                bloodType: "B",
+                rank: "A",
+                crime: "窃盗",
+                imageUrl: "https://houkagakuen.github.io/databank/search/301-小泉凛桜/IMG_0771.jpeg",
+                siteUrl: "https://houkagakuen.github.io/databank/search/301-小泉凛桜"
+            }
+        ];
+
+        function search() {
+            const resultContainer = document.getElementById("resultContainer");
+            resultContainer.innerHTML = "";
+
+            const searchName = document.getElementById("searchName").value;
+            const filtered = students.filter(student =>
+                student.lastName.includes(searchName) || student.firstName.includes(searchName)
+            );
+
+            if (filtered.length === 0) {
+                resultContainer.innerHTML = "<p>該当する生徒は登録されていません。</p>";
+                return;
+            }
+
+            filtered.sort((a, b) => a.id - b.id);
+
+            filtered.forEach(student => {
+                const card = document.createElement("div");
+                card.className = "result-card";
+
+                const img = document.createElement("img");
+                img.src = student.imageUrl;
+                img.alt = `${student.lastName} ${student.firstName}`;
+                img.onclick = () => openOverlay(student.siteUrl);
+
+                const info = document.createElement("div");
+                info.innerHTML = `
+                    <p>番号：${student.id}</p>
+                    <p>氏名：${student.lastName} ${student.firstName}</p>
+                    <p>カナ：${student.lastKana} ${student.firstKana}</p>
+                    <p>性別：${student.gender}</p>
+                    <p>血液：${student.bloodType}</p>
+                    <p>階級：${student.rank}</p>
+                    <p>罪名：${student.crime}</p>
+                `;
+
+                card.appendChild(img);
+                card.appendChild(info);
+                resultContainer.appendChild(card);
+            });
+        }
+
+        function openOverlay(url) {
+            const overlay = document.getElementById("overlay");
+            const iframe = document.getElementById("overlayIframe");
+            iframe.src = url;
+            overlay.style.display = "flex";
+        }
+
+        function closeOverlay() {
+            const overlay = document.getElementById("overlay");
+            const iframe = document.getElementById("overlayIframe");
+            iframe.src = "";
+            overlay.style.display = "none";
+        }
+    </script>
 </head>
 <body>
-
-<div class="container">
-  <h1>データベース検索</h1>
-  <form id="searchForm">
-    <div class="form-group">
-      <label for="lastName">苗字</label>
-      <input type="text" id="lastName" name="lastName">
-    </div>
-    <div class="form-group">
-      <label for="firstName">名前</label>
-      <input type="text" id="firstName" name="firstName">
-    </div>
-    <div class="form-group">
-      <label for="gender">性別</label>
-      <select id="gender" name="gender">
-        <option value="">選択してください</option>
-        <option value="オス">オス</option>
-        <option value="メス">メス</option>
-      </select>
-    </div>
-    <div class="button-group">
-      <button type="button" onclick="search()">検索</button>
-    </div>
-  </form>
-
-  <div class="results" id="results">
-    <h2>検索結果</h2>
-    <p>結果がここに表示されます。</p>
-  </div>
-</div>
-
-<div class="modal" id="modal">
-  <button class="close-btn" onclick="closeModal()">×</button>
-  <iframe id="modalFrame" src=""></iframe>
-</div>
-
-<script>
-  const data = [
-    {
-      img: "https://houkagakuen.github.io/databank/search/204-小泉十和子/IMG_0770.jpeg",
-      site: "https://houkagakuen.github.io/databank/search/204-小泉十和子",
-      name: "小泉 十和子",
-      kana: "コイズミ トワコ",
-      gender: "メス",
-      blood: "A",
-      rank: "E",
-      callNumber: "204",
-      crime: "売春防止法違反",
-    },
-    {
-      img: "https://houkagakuen.github.io/databank/search/301-小泉凛桜/IMG_0771.jpeg",
-      site: "https://houkagakuen.github.io/databank/search/301-小泉凛桜",
-      name: "小泉 凛桜",
-      kana: "コイズミ リオ",
-      gender: "メス",
-      blood: "B",
-      rank: "A",
-      callNumber: "301",
-      crime: "窃盗",
-    },
-  ];
-
-  function search() {
-    const results = document.getElementById("results");
-    results.innerHTML = "";
-    data.forEach(item => {
-      const resultDiv = document.createElement("div");
-      resultDiv.className = "result";
-      resultDiv.innerHTML = `
-        <img src="${item.img}" onclick="openModal('${item.site}')">
-        <div>
-          <p>番号: ${item.callNumber}</p>
-          <p>氏名: ${item.name}</p>
-          <p>カナ: ${item.kana}</p>
-          <p>性別: ${item.gender}</p>
+    <div class="form-container">
+        <div class="form-row">
+            <input type="text" id="searchName" placeholder="苗字または名前で検索">
+            <button onclick="search()">検索</button>
         </div>
-      `;
-      results.appendChild(resultDiv);
-    });
-  }
+    </div>
 
-  function openModal(site) {
-    const modal = document.getElementById("modal");
-    const frame = document.getElementById("modalFrame");
-    frame.src = site;
-    modal.style.display = "flex";
-  }
+    <div class="result-container" id="resultContainer"></div>
 
-  function closeModal() {
-    const modal = document.getElementById("modal");
-    modal.style.display = "none";
-  }
-</script>
-
+    <div class="overlay" id="overlay">
+        <div class="overlay-content">
+            <button class="close-btn" onclick="closeOverlay()">×</button>
+            <iframe id="overlayIframe" src=""></iframe>
+        </div>
+    </div>
 </body>
 </html>
