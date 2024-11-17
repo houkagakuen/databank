@@ -20,9 +20,11 @@
         .form-row {
             display: flex;
             margin-bottom: 10px;
+            flex-wrap: wrap;
         }
-        .form-row input, .form-row select {
+        .form-row input, .form-row select, .form-row button {
             margin-right: 10px;
+            margin-bottom: 10px;
         }
         .result-container {
             display: flex;
@@ -88,7 +90,14 @@
                 rank: "E",
                 crime: "売春防止法違反",
                 imageUrl: "https://houkagakuen.github.io/databank/search/204-小泉十和子/IMG_0770.jpeg",
-                siteUrl: "https://houkagakuen.github.io/databank/search/204-小泉十和子"
+                siteUrl: "https://houkagakuen.github.io/databank/search/204-小泉十和子",
+                birthYear: 2009,
+                birthMonth: 12,
+                birthDay: 28,
+                admissionYear: 2024,
+                admissionMonth: 6,
+                releaseYear: 2027,
+                releaseMonth: 6
             },
             {
                 id: 301,
@@ -101,7 +110,14 @@
                 rank: "A",
                 crime: "窃盗",
                 imageUrl: "https://houkagakuen.github.io/databank/search/301-小泉凛桜/IMG_0771.jpeg",
-                siteUrl: "https://houkagakuen.github.io/databank/search/301-小泉凛桜"
+                siteUrl: "https://houkagakuen.github.io/databank/search/301-小泉凛桜",
+                birthYear: 2009,
+                birthMonth: 7,
+                birthDay: 13,
+                admissionYear: 2021,
+                admissionMonth: 3,
+                releaseYear: 2030,
+                releaseMonth: 3
             }
         ];
 
@@ -109,10 +125,25 @@
             const resultContainer = document.getElementById("resultContainer");
             resultContainer.innerHTML = "";
 
-            const searchName = document.getElementById("searchName").value;
-            const filtered = students.filter(student =>
-                student.lastName.includes(searchName) || student.firstName.includes(searchName)
-            );
+            const filters = {
+                lastName: document.getElementById("lastName").value,
+                firstName: document.getElementById("firstName").value,
+                lastKana: document.getElementById("lastKana").value,
+                firstKana: document.getElementById("firstKana").value,
+                gender: document.getElementById("gender").value,
+                bloodType: document.getElementById("bloodType").value,
+                rank: document.getElementById("rank").value,
+                birthYear: document.getElementById("birthYear").value,
+                admissionYear: document.getElementById("admissionYear").value,
+                releaseYear: document.getElementById("releaseYear").value
+            };
+
+            const filtered = students.filter(student => {
+                return Object.keys(filters).every(key => {
+                    if (!filters[key]) return true;
+                    return student[key].toString().includes(filters[key]);
+                });
+            });
 
             if (filtered.length === 0) {
                 resultContainer.innerHTML = "<p>該当する生徒は登録されていません。</p>";
@@ -165,7 +196,37 @@
 <body>
     <div class="form-container">
         <div class="form-row">
-            <input type="text" id="searchName" placeholder="苗字または名前で検索">
+            <input type="text" id="lastName" placeholder="苗字">
+            <input type="text" id="firstName" placeholder="名前">
+            <input type="text" id="lastKana" placeholder="苗字(カナ)">
+            <input type="text" id="firstKana" placeholder="名前(カナ)">
+        </div>
+        <div class="form-row">
+            <select id="gender">
+                <option value="">性別</option>
+                <option value="オス">オス</option>
+                <option value="メス">メス</option>
+            </select>
+            <select id="bloodType">
+                <option value="">血液型</option>
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="O">O</option>
+                <option value="AB">AB</option>
+            </select>
+            <select id="rank">
+                <option value="">階級</option>
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+                <option value="D">D</option>
+                <option value="E">E</option>
+            </select>
+            <input type="number" id="birthYear" placeholder="生年">
+        </div>
+        <div class="form-row">
+            <input type="number" id="admissionYear" placeholder="入所年">
+            <input type="number" id="releaseYear" placeholder="退所年">
             <button onclick="search()">検索</button>
         </div>
     </div>
