@@ -3,9 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>蜂窩学園データバンク</title>
+    <title>データバンク</title>
     <!-- ファビコン設定 -->
-    <link rel="icon" href="https://houkagakuen.github.io/databank/logo.png" type="image/png">
+    <link rel="icon" href="https://houkagakuen.github.io/databank/logo.jpeg" type="image/jpeg">
+
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="manifest.json">
+
+    <!-- iOS向けアイコン設定 -->
+    <link rel="apple-touch-icon" href="https://houkagakuen.github.io/databank/logo.jpeg">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="データバンク">
+
     <style>
         /* リセットCSS */
         * {
@@ -25,11 +35,11 @@
         header {
             display: flex;
             flex-direction: column;
-            justify-content: space-between; /* 上下の要素をスペースで分ける */
+            justify-content: space-between;
             background-color: #f9f9f9;
             padding: 10px 20px;
             border-bottom: 2px solid #ddd;
-            height: 70px; /* ヘッダーの高さを固定 */
+            height: 70px;
         }
 
         /* ロゴとタイトルのスタイル */
@@ -55,14 +65,14 @@
             font-size: 0.9em;
             color: #333;
             display: flex;
-            justify-content: flex-end; /* 右寄せ */
+            justify-content: flex-end;
             align-items: center;
-            gap: 10px; /* アイテムの間隔を縮める */
-            margin-top: -10px; /* 上に移動 */
+            gap: 10px;
+            margin-top: -10px;
         }
 
         .menu span {
-            white-space: nowrap; /* テキストが折り返されないようにする */
+            white-space: nowrap;
         }
     </style>
 </head>
@@ -71,8 +81,8 @@
     <!-- ヘッダー -->
     <header>
         <div class="logo-title">
-            <img src="https://houkagakuen.github.io/databank/logo.png" alt="蜂窩学園ロゴ">
-            <h1>蜂窩学園データバンク</h1>
+            <img src="https://houkagakuen.github.io/databank/logo.jpeg" alt="蜂窩学園ロゴ">
+            <h1>データバンク</h1>
         </div>
         <div class="menu">
             <span>ファイル(F)</span>
