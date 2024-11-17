@@ -7,14 +7,14 @@
     <!-- ファビコン設定 -->
     <link rel="icon" href="https://houkagakuen.github.io/databank/logo.jpeg" type="image/jpeg">
 
-    <!-- Web App Manifest -->
-    <link rel="manifest" href="manifest.json">
-
-    <!-- iOS向けアイコン設定 -->
+    <!-- iOS用PWA設定 -->
     <link rel="apple-touch-icon" href="https://houkagakuen.github.io/databank/logo.jpeg">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="データバンク">
+
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="manifest.json">
 
     <style>
         /* リセットCSS */
@@ -34,15 +34,14 @@
         /* ヘッダーのスタイル */
         header {
             display: flex;
-            flex-direction: column;
             justify-content: space-between;
-            background-color: #f9f9f9;
+            align-items: center;
+            background-color: #fff;
             padding: 10px 20px;
             border-bottom: 2px solid #ddd;
             height: 70px;
         }
 
-        /* ロゴとタイトルのスタイル */
         .logo-title {
             display: flex;
             align-items: center;
@@ -57,42 +56,161 @@
         .logo-title h1 {
             font-family: 'serif';
             font-size: 1.8em;
-            color: #006400;
+            color: #333;
         }
 
-        /* メニューのスタイル */
         .menu {
-            font-size: 0.9em;
-            color: #333;
             display: flex;
-            justify-content: flex-end;
             align-items: center;
             gap: 10px;
-            margin-top: -10px;
         }
 
         .menu span {
-            white-space: nowrap;
+            font-size: 0.9em;
+            cursor: pointer;
+            color: #333;
+        }
+
+        /* ログイン画面のスタイル */
+        .login-container {
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        .login-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .login-header img {
+            width: 40px;
+            height: auto;
+        }
+
+        .login-header h1 {
+            font-family: 'serif';
+            font-size: 1.5em;
+            color: #333;
+        }
+
+        .login-form label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .login-form input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .checkbox-container input[type="checkbox"]:checked {
+            accent-color: #006400;
+        }
+
+        .login-form button {
+            background-color: #006400;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .login-form button:hover {
+            background-color: #004d00;
         }
     </style>
 </head>
 <body>
 
     <!-- ヘッダー -->
-    <header>
+    <header id="main-header">
         <div class="logo-title">
             <img src="https://houkagakuen.github.io/databank/logo.jpeg" alt="蜂窩学園ロゴ">
-            <h1>データバンク</h1>
+            <h1>蜂窩学園データバンク</h1>
         </div>
         <div class="menu">
-            <span>ファイル(F)</span>
-            <span>ウィンドウ(W)</span>
-            <span>職員連絡(C)</span>
-            <span>生徒管理(A)</span>
-            <span>カメラ(K)</span>
-            <span>マニュアル(M)</span>
+            <span id="logout-button" style="display: none;">ログアウト(O)</span>
         </div>
     </header>
 
+    <!-- ログイン画面 -->
+    <div class="login-container" id="login-container">
+        <div class="login-header">
+            <img src="https://houkagakuen.github.io/databank/logo.jpeg" alt="蜂窩学園ロゴ">
+            <h1>蜂窩学園データバンク</h1>
+        </div>
+        <form class="login-form" onsubmit="handleLogin(event)">
+            <label for="password">パスワード</label>
+            <input type="password" id="password" placeholder="パスワードを入力してください" required>
+            <div class="checkbox-container">
+                <input type="checkbox" id="remember">
+                <label for="remember">ログイン状態を保持</label>
+            </div>
+            <button type="submit">ログイン</button>
+        </form>
+    </div>
+
+    <script>
+        // ログイン状態を保持
+        const loggedIn = localStorage.getItem('loggedIn');
+
+        function handleLogin(event) {
+            event.preventDefault();
+            const password = document.getElementById('password').value;
+            const remember = document.getElementById('remember').checked;
+
+            // 簡易的なパスワードチェック（必要に応じて変更）
+            if (password === 'xctsw2zP2Z!!!') {
+                if (remember) {
+                    localStorage.setItem('loggedIn', true);
+                }
+                showMainContent();
+            } else {
+                alert('パスワードが間違っています');
+            }
+        }
+
+        function handleLogout() {
+            localStorage.removeItem('loggedIn');
+            showLoginScreen();
+        }
+
+        function showMainContent() {
+            document.getElementById('login-container').style.display = 'none';
+            document.getElementById('main-header').style.display = 'flex';
+            document.getElementById('logout-button').style.display = 'inline';
+        }
+
+        function showLoginScreen() {
+            document.getElementById('login-container').style.display = 'block';
+            document.getElementById('main-header').style.display = 'none';
+        }
+
+        document.getElementById('logout-button').addEventListener('click', handleLogout);
+
+        // 初期状態の切り替え
+        if (loggedIn) {
+            showMainContent();
+        } else {
+            showLoginScreen();
+        }
+    </script>
 </body>
 </html>
