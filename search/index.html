@@ -17,13 +17,14 @@
         }
         .form-row {
             display: flex;
+            justify-content: space-between;
             align-items: center;
             margin-bottom: 10px;
-            gap: 10px;
         }
         .form-row label {
             white-space: nowrap;
             font-weight: bold;
+            margin-right: 10px;
         }
         .form-row input, .form-row select {
             height: 30px;
@@ -31,6 +32,7 @@
             padding: 0 5px;
             border: 1px solid #ccc;
             width: 150px;
+            border-radius: 0; /* 角を直角に */
         }
         .form-row input.long {
             width: 300px;
@@ -43,6 +45,7 @@
             border: none;
             cursor: pointer;
             padding: 0 15px;
+            border-radius: 0; /* 角を直角に */
         }
         .form-row button:hover {
             background-color: #004d00;
@@ -63,38 +66,6 @@
             width: 80px;
             height: 80px;
             margin-right: 10px;
-            cursor: pointer;
-        }
-        .overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-        .overlay-content {
-            background: #fff;
-            padding: 20px;
-            width: 80%;
-            position: relative;
-        }
-        .overlay-content iframe {
-            width: 100%;
-            height: 500px;
-        }
-        .close-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: red;
-            color: #fff;
-            border: none;
-            padding: 5px 10px;
             cursor: pointer;
         }
     </style>
@@ -156,8 +127,12 @@
                 rank: document.getElementById("rank").value,
                 birthYear: document.getElementById("birthYear").value,
                 birthMonth: document.getElementById("birthMonth").value,
+                birthDay: document.getElementById("birthDay").value,
+                crime: document.getElementById("crime").value,
                 admissionYear: document.getElementById("admissionYear").value,
-                releaseYear: document.getElementById("releaseYear").value
+                admissionMonth: document.getElementById("admissionMonth").value,
+                releaseYear: document.getElementById("releaseYear").value,
+                releaseMonth: document.getElementById("releaseMonth").value,
             };
 
             const filtered = students.filter(student => {
@@ -199,24 +174,11 @@
                 resultContainer.appendChild(card);
             });
         }
-
-        function openOverlay(url) {
-            const overlay = document.getElementById("overlay");
-            const iframe = document.getElementById("overlayIframe");
-            iframe.src = url;
-            overlay.style.display = "flex";
-        }
-
-        function closeOverlay() {
-            const overlay = document.getElementById("overlay");
-            const iframe = document.getElementById("overlayIframe");
-            iframe.src = "";
-            overlay.style.display = "none";
-        }
     </script>
 </head>
 <body>
     <div class="form-container">
+        <!-- 検索欄 -->
         <div class="form-row">
             <label for="lastName">苗字:</label>
             <input type="text" id="lastName">
@@ -251,7 +213,29 @@
                 <option value="D">D</option>
                 <option value="E">E</option>
             </select>
-            <label for="birthYear">呼称番号:</label>
-            <input type="text" id="birthYear">
         </div>
-
+        <div class="form-row">
+            <label for="birthYear">生年:</label>
+            <input type="number" id="birthYear" placeholder="例: 2000">
+            <label for="birthMonth">生月:</label>
+            <input type="number" id="birthMonth" placeholder="例: 12">
+            <label for="birthDay">生日:</label>
+            <input type="number" id="birthDay" placeholder="例: 25">
+            <label for="crime">罪名:</label>
+            <input type="text" id="crime" class="long">
+        </div>
+        <div class="form-row">
+            <label for="admissionYear">入年:</label>
+            <input type="number" id="admissionYear">
+            <label for="admissionMonth">入月:</label>
+            <input type="number" id="admissionMonth">
+            <label for="releaseYear">退年:</label>
+            <input type="number" id="releaseYear">
+            <label for="releaseMonth">退月:</label>
+            <input type="number" id="releaseMonth">
+            <button onclick="search()">検索</button>
+        </div>
+    </div>
+    <div class="result-container" id="resultContainer"></div>
+</body>
+</html>
