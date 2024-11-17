@@ -146,6 +146,11 @@
             <h1>蜂窩学園データバンク</h1>
         </div>
         <div class="menu">
+            <span>ファイル(F)</span>
+            <span>職員連絡(C)</span>
+            <span>生徒管理(A)</span>
+            <span>カメラ(K)</span>
+            <span>マニュアル(M)</span>
             <span id="logout-button" style="display: none;">ログアウト(O)</span>
         </div>
     </header>
@@ -195,7 +200,7 @@
         function showMainContent() {
             document.getElementById('login-container').style.display = 'none';
             document.getElementById('main-header').style.display = 'flex';
-            document.getElementById('logout-button').style.display = 'inline';
+            document.getElementById('logout-button').style.display = 'inline'; // ログアウトボタンを表示
         }
 
         function showLoginScreen() {
