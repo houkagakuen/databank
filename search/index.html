@@ -10,98 +10,87 @@
             margin: 20px;
             line-height: 1.6;
         }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
+        .label-container {
+            margin-bottom: 10px;
         }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-        th {
-            background-color: #f4f4f4;
-        }
-        .search-container {
-            margin-top: 20px;
-        }
-        .search-container input[type="text"] {
-            padding: 10px;
-            width: 300px;
+        .label-container span {
+            display: inline-block;
             margin-right: 10px;
         }
-        .search-container button {
-            padding: 10px;
+        .rectangle {
+            display: inline-block;
+            width: 200px;
+            height: 20px;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
         }
     </style>
 </head>
 <body>
     <h1>デザイン案</h1>
-    <div>
-        <p>
-            苗字 名前 苗字(カナ) 名前(カナ) <br>
-            性別 血液 階級 呼称番号 <br>
-            生年 生月 生日 収容罪名 <br>
-            入年 入月 退年 退月 検索
-        </p>
+    <div class="label-container">
+        <span>苗字</span>
+        <div class="rectangle"></div>
     </div>
-
-    <table>
-        <thead>
-            <tr>
-                <th>番号</th>
-                <th>氏名</th>
-                <th>カナ</th>
-                <th>性別</th>
-                <th>血液</th>
-                <th>階級</th>
-                <th>罪名</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>204</td>
-                <td>小泉 十和子</td>
-                <td>コイズミ トワコ</td>
-                <td>メス</td>
-                <td>A</td>
-                <td>E</td>
-                <td>売春防止法違反</td>
-            </tr>
-            <tr>
-                <td>204</td>
-                <td>小泉 十和子</td>
-                <td>コイズミ トワコ</td>
-                <td>メス</td>
-                <td>A</td>
-                <td>E</td>
-                <td>売春防止法違反</td>
-            </tr>
-            <tr>
-                <td>204</td>
-                <td>小泉 十和子</td>
-                <td>コイズミ トワコ</td>
-                <td>メス</td>
-                <td>A</td>
-                <td>E</td>
-                <td>売春防止法違反</td>
-            </tr>
-            <tr>
-                <td>204</td>
-                <td>小泉 十和子</td>
-                <td>コイズミ トワコ</td>
-                <td>メス</td>
-                <td>A</td>
-                <td>E</td>
-                <td>売春防止法違反</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <div class="search-container">
-        <input type="text" placeholder="検索">
-        <button>検索</button>
+    <div class="label-container">
+        <span>名前</span>
+        <div class="rectangle"></div>
+    </div>
+    <div class="label-container">
+        <span>苗字(カナ)</span>
+        <div class="rectangle"></div>
+    </div>
+    <div class="label-container">
+        <span>名前(カナ)</span>
+        <div class="rectangle"></div>
+    </div>
+    <div class="label-container">
+        <span>性別</span>
+        <div class="rectangle"></div>
+    </div>
+    <div class="label-container">
+        <span>血液</span>
+        <div class="rectangle"></div>
+    </div>
+    <div class="label-container">
+        <span>階級</span>
+        <div class="rectangle"></div>
+    </div>
+    <div class="label-container">
+        <span>呼称番号</span>
+        <div class="rectangle"></div>
+    </div>
+    <div class="label-container">
+        <span>生年</span>
+        <div class="rectangle"></div>
+    </div>
+    <div class="label-container">
+        <span>生月</span>
+        <div class="rectangle"></div>
+    </div>
+    <div class="label-container">
+        <span>生日</span>
+        <div class="rectangle"></div>
+    </div>
+    <div class="label-container">
+        <span>収容罪名</span>
+        <div class="rectangle"></div>
+    </div>
+    <div class="label-container">
+        <span>入年</span>
+        <div class="rectangle"></div>
+    </div>
+    <div class="label-container">
+        <span>入月</span>
+        <div class="rectangle"></div>
+    </div>
+    <div class="label-container">
+        <span>退年</span>
+        <div class="rectangle"></div>
+    </div>
+    <div class="label-container">
+        <span>退月</span>
+        <div class="rectangle"></div>
     </div>
 </body>
 </html>
