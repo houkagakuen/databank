@@ -10,109 +10,91 @@
             margin: 20px;
             line-height: 1.6;
         }
-        .label-container {
-            margin-bottom: 10px;
+        .label-row {
             display: flex;
+            justify-content: space-between;
             align-items: center;
+            margin-bottom: 10px;
         }
-        .label-container span {
+        .label-row span {
+            display: inline-block;
             margin-right: 10px;
             vertical-align: middle;
+            white-space: nowrap;
         }
         .rectangle {
+            display: inline-block;
             height: 20px;
             background-color: #f0f0f0;
             border: 1px solid #ddd;
             vertical-align: middle;
-        }
-        .first-row {
-            display: flex;
-            justify-content: space-between;
-        }
-        .first-row div {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            margin-right: 10px;
-        }
-        .first-row div:last-child {
-            margin-right: 0;
-        }
-        .first-row .rectangle {
-            width: 100%;
-        }
-        .single-label {
-            width: 200px;
+            width: calc((100% - 40px) / 4); /* 四角形の幅を均等に分割 */
         }
     </style>
 </head>
 <body>
     <h1>デザイン案</h1>
-    <div class="label-container first-row">
-        <div>
-            <span>苗字</span>
-            <div class="rectangle"></div>
-        </div>
-        <div>
-            <span>名前</span>
-            <div class="rectangle"></div>
-        </div>
-        <div>
-            <span>苗字(カナ)</span>
-            <div class="rectangle"></div>
-        </div>
-        <div>
-            <span>名前(カナ)</span>
-            <div class="rectangle"></div>
-        </div>
+
+    <!-- 1行目 -->
+    <div class="label-row">
+        <span>苗字</span>
+        <div class="rectangle"></div>
+        <span>名前</span>
+        <div class="rectangle"></div>
+        <span>苗字(カナ)</span>
+        <div class="rectangle"></div>
+        <span>名前(カナ)</span>
+        <div class="rectangle"></div>
     </div>
+
+    <!-- 以下、他のラベル -->
     <div class="label-container">
         <span>性別</span>
-        <div class="rectangle single-label"></div>
+        <div class="rectangle"></div>
     </div>
     <div class="label-container">
         <span>血液</span>
-        <div class="rectangle single-label"></div>
+        <div class="rectangle"></div>
     </div>
     <div class="label-container">
         <span>階級</span>
-        <div class="rectangle single-label"></div>
+        <div class="rectangle"></div>
     </div>
     <div class="label-container">
         <span>呼称番号</span>
-        <div class="rectangle single-label"></div>
+        <div class="rectangle"></div>
     </div>
     <div class="label-container">
         <span>生年</span>
-        <div class="rectangle single-label"></div>
+        <div class="rectangle"></div>
     </div>
     <div class="label-container">
         <span>生月</span>
-        <div class="rectangle single-label"></div>
+        <div class="rectangle"></div>
     </div>
     <div class="label-container">
         <span>生日</span>
-        <div class="rectangle single-label"></div>
+        <div class="rectangle"></div>
     </div>
     <div class="label-container">
         <span>収容罪名</span>
-        <div class="rectangle single-label"></div>
+        <div class="rectangle"></div>
     </div>
     <div class="label-container">
         <span>入年</span>
-        <div class="rectangle single-label"></div>
+        <div class="rectangle"></div>
     </div>
     <div class="label-container">
         <span>入月</span>
-        <div class="rectangle single-label"></div>
+        <div class="rectangle"></div>
     </div>
     <div class="label-container">
         <span>退年</span>
-        <div class="rectangle single-label"></div>
+        <div class="rectangle"></div>
     </div>
     <div class="label-container">
         <span>退月</span>
-        <div class="rectangle single-label"></div>
+        <div class="rectangle"></div>
     </div>
 </body>
 </html>
