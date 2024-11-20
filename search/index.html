@@ -62,9 +62,26 @@
             margin: 0 auto; /* 中央揃え */
         }
         .grid-rectangle {
-            height: 180px; /* Y軸を3倍（60px × 3）に変更 */
+            height: 180px; /* Y軸を3倍に設定 */
             background-color: #f0f0f0;
             border: 1px solid #ddd;
+            position: relative;
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .photo-box {
+            width: 60px; /* 1:1.5の幅（例: 40px × 1.5） */
+            height: 90px; /* 1.5倍の高さ */
+            background-color: #dcdcdc;
+            border: 1px solid #aaa;
+            margin-right: 10px; /* テキストとの間隔 */
+            flex-shrink: 0; /* サイズ固定 */
+        }
+        .info-text {
+            font-size: 14px;
+            line-height: 1.8; /* テキストの行間隔 */
         }
     </style>
 </head>
@@ -104,7 +121,7 @@
         <div class="rectangle"></div>
         <span>生日</span>
         <div class="rectangle"></div>
-        <span>年齢</span>
+        <span>罪名</span>
         <div class="rectangle"></div>
     </div>
 
@@ -130,12 +147,79 @@
 
     <!-- グリッドレイアウト -->
     <div class="grid-container">
-        <div class="grid-rectangle"></div>
-        <div class="grid-rectangle"></div>
-        <div class="grid-rectangle"></div>
-        <div class="grid-rectangle"></div>
-        <div class="grid-rectangle"></div>
-        <div class="grid-rectangle"></div>
+        <!-- 各四角形内の構造 -->
+        <div class="grid-rectangle">
+            <div class="photo-box"></div>
+            <div class="info-text">
+                番号：<br>
+                氏名：<br>
+                カナ：<br>
+                性別：<br>
+                血液：<br>
+                階級：<br>
+                罪名：
+            </div>
+        </div>
+        <div class="grid-rectangle">
+            <div class="photo-box"></div>
+            <div class="info-text">
+                番号：<br>
+                氏名：<br>
+                カナ：<br>
+                性別：<br>
+                血液：<br>
+                階級：<br>
+                罪名：
+            </div>
+        </div>
+        <div class="grid-rectangle">
+            <div class="photo-box"></div>
+            <div class="info-text">
+                番号：<br>
+                氏名：<br>
+                カナ：<br>
+                性別：<br>
+                血液：<br>
+                階級：<br>
+                罪名：
+            </div>
+        </div>
+        <div class="grid-rectangle">
+            <div class="photo-box"></div>
+            <div class="info-text">
+                番号：<br>
+                氏名：<br>
+                カナ：<br>
+                性別：<br>
+                血液：<br>
+                階級：<br>
+                罪名：
+            </div>
+        </div>
+        <div class="grid-rectangle">
+            <div class="photo-box"></div>
+            <div class="info-text">
+                番号：<br>
+                氏名：<br>
+                カナ：<br>
+                性別：<br>
+                血液：<br>
+                階級：<br>
+                罪名：
+            </div>
+        </div>
+        <div class="grid-rectangle">
+            <div class="photo-box"></div>
+            <div class="info-text">
+                番号：<br>
+                氏名：<br>
+                カナ：<br>
+                性別：<br>
+                血液：<br>
+                階級：<br>
+                罪名：
+            </div>
+        </div>
     </div>
 </body>
 </html>
