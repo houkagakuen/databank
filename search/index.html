@@ -45,9 +45,26 @@
             width: calc(100% - 20px); /* 左右のマージンを引いた幅 */
             background-color: #006400; /* 濃い緑色 */
             color: white; /* 白い文字 */
+            font-size: 14px; /* 他のラベルと同じフォントサイズ */
             font-weight: bold;
             border: none;
             cursor: pointer;
+        }
+        .divider {
+            margin: 20px 0;
+            border-top: 1px solid #ddd; /* 検索ボタンの下の線 */
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* 横2列 */
+            gap: 10px; /* 四角形間の間隔 */
+            width: calc(100% - 20px); /* 検索ボタンの幅と揃える */
+            margin: 0 auto; /* 中央揃え */
+        }
+        .grid-rectangle {
+            height: 60px; /* 四角形の高さ */
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
         }
     </style>
 </head>
@@ -106,6 +123,17 @@
     <!-- 5行目 -->
     <div class="search-row">
         <button class="search-button">検　索</button>
+    </div>
+
+    <!-- 検索ボタン下の線 -->
+    <div class="divider"></div>
+
+    <!-- グリッドレイアウト -->
+    <div class="grid-container">
+        <div class="grid-rectangle"></div>
+        <div class="grid-rectangle"></div>
+        <div class="grid-rectangle"></div>
+        <div class="grid-rectangle"></div>
     </div>
 </body>
 </html>
