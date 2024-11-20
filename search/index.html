@@ -28,7 +28,8 @@
             background-color: #f0f0f0;
             border: 1px solid #ddd;
             vertical-align: middle;
-            width: 150px; /* 幅を固定 */
+            width: calc((100% - 40px) / 4); /* 四角形の幅を均等に分割 */
+            margin-right: 20px; /* 次の文字との間隔を広げる */
         }
     </style>
 </head>
@@ -90,14 +91,6 @@
     </div>
     <div class="label-container">
         <span>退年</span>
-        <div class="rectangle"></div>
-    </div>
-    <div class="label-container">
-        <span>退月</span>
-        <div class="rectangle"></div>
-    </div>
-</body>
-</html>
         <div class="rectangle"></div>
     </div>
     <div class="label-container">
