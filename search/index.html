@@ -31,6 +31,24 @@
             width: calc((100% - 40px) / 4); /* 四角形の幅を均等に分割 */
             margin-right: 20px; /* 次の文字との間隔を広げる */
         }
+        .search-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .search-button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 20px; /* 他の四角形と同じ高さ */
+            width: calc(100% - 20px); /* 左右のマージンを引いた幅 */
+            background-color: #006400; /* 濃い緑色 */
+            color: white; /* 白い文字 */
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -82,6 +100,11 @@
         <div class="rectangle"></div>
         <span>退月</span>
         <div class="rectangle"></div>
+    </div>
+
+    <!-- 5行目 -->
+    <div class="search-row">
+        <button class="search-button">検　索</button>
     </div>
 </body>
 </html>
