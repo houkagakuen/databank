@@ -56,13 +56,13 @@
         }
         .grid-container {
             display: grid;
-            grid-template-columns: 1fr 1fr; /* 横2列 */
+            grid-template-columns: repeat(3, 1fr); /* 横3列 */
             gap: 10px; /* 四角形間の間隔 */
             width: calc(100% - 20px); /* 検索ボタンの幅と揃える */
             margin: 0 auto; /* 中央揃え */
         }
         .grid-rectangle {
-            height: 60px; /* 四角形の高さ */
+            height: 180px; /* Y軸を3倍（60px × 3）に変更 */
             background-color: #f0f0f0;
             border: 1px solid #ddd;
         }
@@ -130,6 +130,8 @@
 
     <!-- グリッドレイアウト -->
     <div class="grid-container">
+        <div class="grid-rectangle"></div>
+        <div class="grid-rectangle"></div>
         <div class="grid-rectangle"></div>
         <div class="grid-rectangle"></div>
         <div class="grid-rectangle"></div>
