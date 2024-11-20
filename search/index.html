@@ -28,8 +28,8 @@
             background-color: #f0f0f0;
             border: 1px solid #ddd;
             vertical-align: middle;
-            width: calc((100% - 40px) / 4); /* 四角形の幅を均等に分割 */
-            margin-right: 20px; /* 次の文字との間隔を広げる */
+            width: calc((100% - 40px) / 4);
+            margin-right: 20px;
         }
         .search-row {
             display: flex;
@@ -41,28 +41,28 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 40px; /* 他の四角形の2倍の高さ */
-            width: calc(100% - 20px); /* 左右のマージンを引いた幅 */
-            background-color: #006400; /* 濃い緑色 */
-            color: white; /* 白い文字 */
-            font-size: 14px; /* 他のラベルと同じフォントサイズ */
+            height: 40px;
+            width: calc(100% - 20px);
+            background-color: #006400;
+            color: white;
+            font-size: 14px;
             font-weight: bold;
             border: none;
             cursor: pointer;
         }
         .divider {
             margin: 20px 0;
-            border-top: 1px solid #ddd; /* 検索ボタンの下の線 */
+            border-top: 1px solid #ddd;
         }
         .grid-container {
             display: grid;
-            grid-template-columns: repeat(3, 1fr); /* 横3列 */
-            gap: 10px; /* 四角形間の間隔 */
-            width: calc(100% - 20px); /* 検索ボタンの幅と揃える */
-            margin: 0 auto; /* 中央揃え */
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            width: calc(100% - 20px);
+            margin: 0 auto;
         }
         .grid-rectangle {
-            height: 180px; /* Y軸を3倍に設定 */
+            height: 180px;
             background-color: #f0f0f0;
             border: 1px solid #ddd;
             position: relative;
@@ -72,21 +72,20 @@
             box-sizing: border-box;
         }
         .photo-box {
-            width: 60px; /* 1:1.5の幅（例: 40px × 1.5） */
-            height: 90px; /* 1.5倍の高さ */
+            width: 120px; /* 元の60pxの2倍 */
+            height: 180px; /* 元の90pxの2倍 (1:1.5比率維持) */
             background-color: #dcdcdc;
             border: 1px solid #aaa;
-            margin-right: 10px; /* テキストとの間隔 */
-            flex-shrink: 0; /* サイズ固定 */
+            margin-right: 10px;
+            flex-shrink: 0;
         }
         .info-text {
             font-size: 14px;
-            line-height: 1.8; /* テキストの行間隔 */
+            line-height: 1.8;
         }
     </style>
 </head>
 <body>
-    <!-- サイト名 -->
     <h1>生徒検索データベース</h1>
 
     <!-- 1行目 -->
@@ -147,7 +146,6 @@
 
     <!-- グリッドレイアウト -->
     <div class="grid-container">
-        <!-- 各四角形内の構造 -->
         <div class="grid-rectangle">
             <div class="photo-box"></div>
             <div class="info-text">
