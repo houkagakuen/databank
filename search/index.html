@@ -194,14 +194,14 @@
         // 登録されているデータ
         const students = [
             {
-                id: "204",
+                id: "104",
                 lastName: "小泉",
                 firstName: "十和子",
                 sei: "コイズミ",
                 mei: "トワコ",
                 gender: "メス",
                 bloodType: "A",
-                rank: "E",
+                rank: "A",
                 birthYear: "2009",
                 birthMonth: "12",
                 birthDay: "7",
@@ -245,13 +245,93 @@
                 birthYear: "2008",
                 birthMonth: "7",
                 birthDay: "8",
-                crime: "殺人罪・窃盗罪・住居侵入罪",
+                crime: "殺人罪・住居侵入罪",
                 entryYear: "2019",
                 entryMonth: "9",
                 exitYear: "2035",
                 exitMonth: "3",
                 facility: "広島県広島第４分院",
                 photo: "https://houkagakuen.github.io/databank/search/portrait/IMG_0937.jpeg"
+            },
+            {
+                id: "102",
+                lastName: "小泉",
+                firstName: "凛桜",
+                sei: "コイズミ",
+                mei: "リオ",
+                gender: "メス",
+                bloodType: "B",
+                rank: "A",
+                birthYear: "2011",
+                birthMonth: "8",
+                birthDay: "13",
+                crime: "監禁罪",
+                entryYear: "2023",
+                entryMonth: "1",
+                exitYear: "2025",
+                exitMonth: "1",
+                facility: "名古屋本院",
+                photo: "https://houkagakuen.github.io/databank/search/portrait/IMG_0939.jpeg"
+            },
+            {
+                id: "103",
+                lastName: "藤井",
+                firstName: "恵世",
+                sei: "フジイ",
+                mei: "アヤセ",
+                gender: "メス",
+                bloodType: "O",
+                rank: "A",
+                birthYear: "2007",
+                birthMonth: "12",
+                birthDay: "30",
+                crime: "住居侵入罪",
+                entryYear: "2023",
+                entryMonth: "10",
+                exitYear: "2025",
+                exitMonth: "8",
+                facility: "栃木県黒羽分院",
+                photo: "https://houkagakuen.github.io/databank/search/portrait/IMG_0940.jpeg"
+            },
+            {
+                id: "105",
+                lastName: "吉村",
+                firstName: "美咲",
+                sei: "ヨシムラ",
+                mei: "ミサキ",
+                gender: "メス",
+                bloodType: "A",
+                rank: "A",
+                birthYear: "2012",
+                birthMonth: "3",
+                birthDay: "9",
+                crime: "詐欺罪",
+                entryYear: "2024",
+                entryMonth: "10",
+                exitYear: "2031",
+                exitMonth: "10",
+                facility: "兵庫県神戸第３分院",
+                photo: "https://houkagakuen.github.io/databank/search/portrait/IMG_0941.jpeg"
+            },
+            {
+                id: "106",
+                lastName: "西田",
+                firstName: "圭希",
+                sei: "ニシダ",
+                mei: "タマキ",
+                gender: "メス",
+                bloodType: "O",
+                rank: "A",
+                birthYear: "2013",
+                birthMonth: "1",
+                birthDay: "2",
+                crime: "殺人罪",
+                entryYear: "2024",
+                entryMonth: "7",
+                exitYear: "2036",
+                exitMonth: "1",
+                facility: "広島県広島第４分院",
+                photo: "https://houkagakuen.github.io/databank/search/portrait/IMG_0942.jpeg"
             }
         ];
 
@@ -284,7 +364,7 @@
                     (rank === "" || student.rank === rank) &&
                     (facilityFilters.length === 0 || facilityFilters.includes(student.facility))
                 );
-            });
+            }).sort((a, b) => a.id - b.id); // 番号が若い順にソート
 
             // 結果表示エリアの更新
             const resultsDiv = document.getElementById("results");
