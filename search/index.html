@@ -16,20 +16,20 @@
             align-items: center;
             margin-bottom: 10px;
         }
-        .label-row span, .checkbox-label {
+        .label-row span, .checkbox-label span {
             margin-right: 10px;
             vertical-align: middle;
             white-space: nowrap;
         }
         .rectangle, select, input {
-            height: 20px;
+            height: 30px;
             background-color: #f0f0f0;
             border: 1px solid #ddd;
             vertical-align: middle;
             width: calc((100% - 40px) / 4);
             margin-right: 20px;
             box-sizing: border-box;
-            padding: 2px 5px;
+            padding: 5px;
         }
         .search-row {
             display: flex;
@@ -42,7 +42,7 @@
             justify-content: center;
             align-items: center;
             height: 40px;
-            width: calc(100% - 20px);
+            width: 200px;
             background-color: #006400;
             color: white;
             font-size: 14px;
@@ -62,7 +62,7 @@
             margin: 0 auto;
         }
         .grid-rectangle {
-            height: 180px;
+            height: 200px;
             background-color: #f0f0f0;
             border: 1px solid #ddd;
             position: relative;
@@ -72,8 +72,8 @@
             box-sizing: border-box;
         }
         .photo-box {
-            width: 102px;
-            height: 153px;
+            width: 120px;
+            height: 180px;
             background-color: #dcdcdc;
             border: 1px solid #aaa;
             margin-right: 10px;
@@ -168,19 +168,24 @@
     <!-- 刑務所チェックボックス -->
     <div class="checkbox-row">
         <label class="checkbox-label">
-            <input type="checkbox" id="kobe" class="checkbox" checked>神戸本院
+            <input type="checkbox" id="kobe" class="checkbox" checked>
+            <span>神戸本院</span>
         </label>
         <label class="checkbox-label">
-            <input type="checkbox" id="tochigi" class="checkbox" checked>栃木県黒羽分院
+            <input type="checkbox" id="tochigi" class="checkbox" checked>
+            <span>栃木県黒羽分院</span>
         </label>
         <label class="checkbox-label">
-            <input type="checkbox" id="nagoya" class="checkbox" checked>愛知県名古屋第３分院
+            <input type="checkbox" id="nagoya" class="checkbox" checked>
+            <span>愛知県名古屋第３分院</span>
         </label>
         <label class="checkbox-label">
-            <input type="checkbox" id="hiroshima" class="checkbox" checked>広島県広島第４分院
+            <input type="checkbox" id="hiroshima" class="checkbox" checked>
+            <span>広島県広島第４分院</span>
         </label>
         <label class="checkbox-label">
-            <input type="checkbox" id="fukuoka" class="checkbox" checked>福岡県福岡第５分院
+            <input type="checkbox" id="fukuoka" class="checkbox" checked>
+            <span>福岡県福岡第５分院</span>
         </label>
     </div>
 
@@ -194,7 +199,6 @@
     <div id="results" class="grid-container"></div>
 
     <script>
-        // 登録されているデータ
         const students = [
             {
                 id: "204",
@@ -258,73 +262,84 @@
             }
         ];
 
-        // 検索処理
         function search() {
+            const lastName = document.getElementById("lastName").value.trim();
+            const firstName = document.getElementById("firstName").value.trim();
+            const sei = document.getElementById("sei").value.trim();
+            const mei = document.getElementById("mei").value.trim();
+            const gender = document.getElementById("gender").value;
+            const bloodType = document.getElementById("bloodType").value;
+            const rank = document.getElementById("rank").value;
+            const id = document.getElementById("id").value.trim();
+            const birthYear = document.getElementById("birthYear").value.trim();
+            const birthMonth = document.getElementById("birthMonth").value.trim();
+            const birthDay = document.getElementById("birthDay").value.trim();
+            const crime = document.getElementById("crime").value.trim();
+            const entryYear = document.getElementById("entryYear").value.trim();
+            const entryMonth = document.getElementById("entryMonth").value.trim();
+            const exitYear = document.getElementById("exitYear").value.trim();
+            const exitMonth = document.getElementById("exitMonth").value.trim();
+
+            const facilities = [];
+            if (document.getElementById("kobe").checked) facilities.push("神戸本院");
+            if (document.getElementById("tochigi").checked) facilities.push("栃木県黒羽分院");
+            if (document.getElementById("nagoya").checked) facilities.push("愛知県名古屋第３分院");
+            if (document.getElementById("hiroshima").checked) facilities.push("広島県広島第４分院");
+            if (document.getElementById("fukuoka").checked) facilities.push("福岡県福岡第５分院");
+
+            const filteredResults = students.filter(student => {
+                return (!lastName || student.lastName.includes(lastName)) &&
+                    (!firstName || student.firstName.includes(firstName)) &&
+                    (!sei || student.sei.includes(sei)) &&
+                    (!mei || student.mei.includes(mei)) &&
+                    (!gender || student.gender === gender) &&
+                    (!bloodType || student.bloodType === bloodType) &&
+                    (!rank || student.rank === rank) &&
+                    (!id || student.id.includes(id)) &&
+                    (!birthYear || student.birthYear.includes(birthYear)) &&
+                    (!birthMonth || student.birthMonth.includes(birthMonth)) &&
+                    (!birthDay || student.birthDay.includes(birthDay)) &&
+                    (!crime || student.crime.includes(crime)) &&
+                    (!entryYear || student.entryYear.includes(entryYear)) &&
+                    (!entryMonth || student.entryMonth.includes(entryMonth)) &&
+                    (!exitYear || student.exitYear.includes(exitYear)) &&
+                    (!exitMonth || student.exitMonth.includes(exitMonth)) &&
+                    (facilities.length === 0 || facilities.includes(student.facility));
+            });
+
             const resultsContainer = document.getElementById("results");
-            resultsContainer.innerHTML = ""; // 初期化
+            resultsContainer.innerHTML = "";
 
-            // 検索条件の取得
-            const searchFacility = {
-                kobe: document.getElementById("kobe").checked,
-                tochigi: document.getElementById("tochigi").checked,
-                nagoya: document.getElementById("nagoya").checked,
-                hiroshima: document.getElementById("hiroshima").checked,
-                fukuoka: document.getElementById("fukuoka").checked
-            };
+            if (filteredResults.length === 0) {
+                resultsContainer.innerHTML = "<p class='no-results'>一致する生徒はいません</p>";
+            } else {
+                filteredResults.forEach(student => {
+                    const studentBox = document.createElement("div");
+                    studentBox.classList.add("grid-rectangle");
 
-            const filters = {
-                id: document.getElementById("id").value,
-                lastName: document.getElementById("lastName").value,
-                firstName: document.getElementById("firstName").value,
-                sei: document.getElementById("sei").value,
-                mei: document.getElementById("mei").value,
-                gender: document.getElementById("gender").value,
-                bloodType: document.getElementById("bloodType").value,
-                rank: document.getElementById("rank").value,
-                birthYear: document.getElementById("birthYear").value,
-                birthMonth: document.getElementById("birthMonth").value,
-                birthDay: document.getElementById("birthDay").value,
-                crime: document.getElementById("crime").value,
-                entryYear: document.getElementById("entryYear").value,
-                entryMonth: document.getElementById("entryMonth").value,
-                exitYear: document.getElementById("exitYear").value,
-                exitMonth: document.getElementById("exitMonth").value
-            };
+                    const photoBox = document.createElement("div");
+                    photoBox.classList.add("photo-box");
+                    photoBox.style.backgroundImage = `url(${student.photo})`;
 
-            // フィルタリング
-            const filteredStudents = students.filter(student => {
-                const facilityMatch = searchFacility[student.facility];
-                return (
-                    facilityMatch &&
-                    Object.keys(filters).every(key => {
-                        if (filters[key] === "") return true;
-                        return student[key]?.includes(filters[key]);
-                    })
-                );
-            });
+                    const infoText = document.createElement("div");
+                    infoText.classList.add("info-text");
+                    infoText.innerHTML = `
+                        <strong>${student.lastName} ${student.firstName}</strong><br>
+                        性別: ${student.gender}<br>
+                        血液型: ${student.bloodType}<br>
+                        階級: ${student.rank}<br>
+                        施設: ${student.facility}<br>
+                        生年: ${student.birthYear}年 ${student.birthMonth}月 ${student.birthDay}日<br>
+                        罪名: ${student.crime}<br>
+                        入所年: ${student.entryYear}年 ${student.entryMonth}月<br>
+                        退所年: ${student.exitYear}年 ${student.exitMonth}月
+                    `;
 
-            // 結果を表示
-            if (filteredStudents.length === 0) {
-                resultsContainer.innerHTML = `<div class="no-results">一致する生徒はいません</div>`;
-                return;
+                    studentBox.appendChild(photoBox);
+                    studentBox.appendChild(infoText);
+                    resultsContainer.appendChild(studentBox);
+                });
             }
-
-            filteredStudents.forEach(student => {
-                const studentDiv = document.createElement("div");
-                studentDiv.className = "grid-rectangle";
-                studentDiv.innerHTML = `
-                    <div class="photo-box" style="background-image: url('${student.photo}')"></div>
-                    <div class="info-text">
-                        番号：${student.id}<br>
-                        氏名：${student.lastName} ${student.firstName}<br>
-                        カナ：${student.sei}${student.mei}<br>
-                        性別：${student.gender}<br>
-                        施設：${student.facility}<br>
-                        罪名：${student.crime}<br>
-                    </div>
-                `;
-                resultsContainer.appendChild(studentDiv);
-            });
         }
     </script>
 </body>
