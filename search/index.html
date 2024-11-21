@@ -22,14 +22,16 @@
             vertical-align: middle;
             white-space: nowrap;
         }
-        .rectangle {
+        .rectangle, select, input {
             display: inline-block;
-            height: 20px;
+            height: 30px;
             background-color: #f0f0f0;
             border: 1px solid #ddd;
             vertical-align: middle;
             width: calc((100% - 40px) / 4);
             margin-right: 20px;
+            padding-left: 5px;
+            box-sizing: border-box;
         }
         .search-row {
             display: flex;
@@ -62,7 +64,7 @@
             margin: 0 auto;
         }
         .grid-rectangle {
-            height: 180px;
+            min-height: 180px;
             background-color: #f0f0f0;
             border: 1px solid #ddd;
             position: relative;
@@ -72,146 +74,148 @@
             box-sizing: border-box;
         }
         .photo-box {
-            width: 102px; /* 元の60pxの1.7倍 */
-            height: 153px; /* 元の90pxの1.7倍 (1:1.5比率維持) */
+            width: 102px;
+            height: 153px;
             background-color: #dcdcdc;
             border: 1px solid #aaa;
             margin-right: 10px;
             flex-shrink: 0;
+            background-size: cover;
+            background-position: center;
         }
         .info-text {
             font-size: 14px;
             line-height: 1.8;
         }
+        .no-results {
+            text-align: center;
+            font-size: 16px;
+            color: #555;
+            margin-top: 20px;
+        }
     </style>
+    <script>
+        // 生徒データを登録
+        const students = [
+            {
+                photo: "https://houkagakuen.github.io/databank/search/204-小泉十和子/IMG_0770.jpeg",
+                number: 204,
+                lastName: "小泉",
+                firstName: "十和子",
+                lastKana: "コイズミ",
+                firstKana: "トワコ",
+                gender: "メス",
+                bloodType: "A",
+                rank: "E",
+                birthYear: 2009,
+                birthMonth: 12,
+                birthDay: 7,
+                crime: "売春防止法違反",
+                entryYear: 2023,
+                entryMonth: 7,
+                exitYear: 2026,
+                exitMonth: 7
+            }
+        ];
+
+        function searchStudents() {
+            // 入力値を取得
+            const lastName = document.getElementById("lastName").value.trim();
+            const firstName = document.getElementById("firstName").value.trim();
+            const lastKana = document.getElementById("lastKana").value.trim();
+            const firstKana = document.getElementById("firstKana").value.trim();
+            const gender = document.getElementById("gender").value;
+            const bloodType = document.getElementById("bloodType").value;
+            const rank = document.getElementById("rank").value;
+
+            // 結果をフィルタリング
+            const results = students.filter(student => {
+                return (!lastName || student.lastName.includes(lastName)) &&
+                    (!firstName || student.firstName.includes(firstName)) &&
+                    (!lastKana || student.lastKana.includes(lastKana)) &&
+                    (!firstKana || student.firstKana.includes(firstKana)) &&
+                    (!gender || student.gender === gender) &&
+                    (!bloodType || student.bloodType === bloodType) &&
+                    (!rank || student.rank === rank);
+            });
+
+            // 結果を表示
+            const container = document.querySelector(".grid-container");
+            container.innerHTML = ""; // 現在の結果をクリア
+
+            if (results.length === 0) {
+                container.innerHTML = '<div class="no-results">一致する生徒はいません</div>';
+                return;
+            }
+
+            results.sort((a, b) => a.number - b.number); // 番号順にソート
+
+            results.forEach(student => {
+                const resultElement = document.createElement("div");
+                resultElement.classList.add("grid-rectangle");
+                resultElement.innerHTML = `
+                    <div class="photo-box" style="background-image: url('${student.photo}')"></div>
+                    <div class="info-text">
+                        番号：${student.number}<br>
+                        氏名：${student.lastName}${student.firstName}<br>
+                        カナ：${student.lastKana}${student.firstKana}<br>
+                        性別：${student.gender}<br>
+                        階級：${student.rank}<br>
+                        罪名：${student.crime}
+                    </div>
+                `;
+                container.appendChild(resultElement);
+            });
+        }
+    </script>
 </head>
 <body>
-    <h1>生徒検索データベース</h1>
-
-    <!-- 1行目 -->
+    <!-- 検索入力 -->
     <div class="label-row">
         <span>苗字</span>
-        <div class="rectangle"></div>
+        <input type="text" id="lastName" class="rectangle">
         <span>名前</span>
-        <div class="rectangle"></div>
+        <input type="text" id="firstName" class="rectangle">
         <span>セイ</span>
-        <div class="rectangle"></div>
+        <input type="text" id="lastKana" class="rectangle">
         <span>メイ</span>
-        <div class="rectangle"></div>
+        <input type="text" id="firstKana" class="rectangle">
     </div>
-
-    <!-- 2行目 -->
     <div class="label-row">
         <span>性別</span>
-        <div class="rectangle"></div>
+        <select id="gender" class="rectangle">
+            <option value="">選択しない</option>
+            <option value="オス">オス</option>
+            <option value="メス">メス</option>
+        </select>
         <span>血液</span>
-        <div class="rectangle"></div>
+        <select id="bloodType" class="rectangle">
+            <option value="">選択しない</option>
+            <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="AB">AB</option>
+            <option value="O">O</option>
+        </select>
         <span>階級</span>
-        <div class="rectangle"></div>
+        <select id="rank" class="rectangle">
+            <option value="">選択しない</option>
+            <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="C">C</option>
+            <option value="D">D</option>
+            <option value="E">E</option>
+        </select>
         <span>番号</span>
-        <div class="rectangle"></div>
+        <input type="number" id="number" class="rectangle">
     </div>
 
-    <!-- 3行目 -->
-    <div class="label-row">
-        <span>生年</span>
-        <div class="rectangle"></div>
-        <span>生月</span>
-        <div class="rectangle"></div>
-        <span>生日</span>
-        <div class="rectangle"></div>
-        <span>罪名</span>
-        <div class="rectangle"></div>
-    </div>
-
-    <!-- 4行目 -->
-    <div class="label-row">
-        <span>入年</span>
-        <div class="rectangle"></div>
-        <span>入月</span>
-        <div class="rectangle"></div>
-        <span>退年</span>
-        <div class="rectangle"></div>
-        <span>退月</span>
-        <div class="rectangle"></div>
-    </div>
-
-    <!-- 5行目 -->
+    <!-- 検索ボタン -->
     <div class="search-row">
-        <button class="search-button">検　索</button>
+        <button class="search-button" onclick="searchStudents()">検　索</button>
     </div>
 
-    <!-- 検索ボタン下の線 -->
+    <!-- 検索結果 -->
     <div class="divider"></div>
-
-    <!-- グリッドレイアウト -->
-    <div class="grid-container">
-        <div class="grid-rectangle">
-            <div class="photo-box"></div>
-            <div class="info-text">
-                番号：<br>
-                氏名：<br>
-                カナ：<br>
-                性別：<br>
-                階級：<br>
-                罪名：
-            </div>
-        </div>
-        <div class="grid-rectangle">
-            <div class="photo-box"></div>
-            <div class="info-text">
-                番号：<br>
-                氏名：<br>
-                カナ：<br>
-                性別：<br>
-                階級：<br>
-                罪名：
-            </div>
-        </div>
-        <div class="grid-rectangle">
-            <div class="photo-box"></div>
-            <div class="info-text">
-                番号：<br>
-                氏名：<br>
-                カナ：<br>
-                性別：<br>
-                階級：<br>
-                罪名：
-            </div>
-        </div>
-        <div class="grid-rectangle">
-            <div class="photo-box"></div>
-            <div class="info-text">
-                番号：<br>
-                氏名：<br>
-                カナ：<br>
-                性別：<br>
-                階級：<br>
-                罪名：
-            </div>
-        </div>
-        <div class="grid-rectangle">
-            <div class="photo-box"></div>
-            <div class="info-text">
-                番号：<br>
-                氏名：<br>
-                カナ：<br>
-                性別：<br>
-                階級：<br>
-                罪名：
-            </div>
-        </div>
-        <div class="grid-rectangle">
-            <div class="photo-box"></div>
-            <div class="info-text">
-                番号：<br>
-                氏名：<br>
-                カナ：<br>
-                性別：<br>
-                階級：<br>
-                罪名：
-            </div>
-        </div>
-    </div>
+    <div class="grid-container"></div>
 </body>
 </html>
