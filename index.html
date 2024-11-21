@@ -72,12 +72,16 @@
         }
 
         /* iframe 表示エリアのスタイル */
-        #iframe-container {
+        #iframe-container-wrapper {
             display: none; /* 初期状態では非表示 */
+            background-color: #fff; /* 背景色を白に設定 */
+            padding: 20px; /* 周囲に余白を追加 */
+        }
+
+        #iframe-container {
             width: 100%;
             height: 80vh;
             border: none;
-            margin: 0;
         }
 
         /* ログイン画面のスタイル */
@@ -165,7 +169,9 @@
     </header>
 
     <!-- iframe 表示エリア -->
-    <iframe id="iframe-container" src=""></iframe>
+    <div id="iframe-container-wrapper">
+        <iframe id="iframe-container" src=""></iframe>
+    </div>
 
     <!-- ログイン画面 -->
     <div class="login-container" id="login-container">
@@ -222,11 +228,12 @@
 
         // 生徒管理クリック時の処理
         const studentManagementButton = document.getElementById('student-management');
+        const iframeContainerWrapper = document.getElementById('iframe-container-wrapper');
         const iframeContainer = document.getElementById('iframe-container');
 
         studentManagementButton.addEventListener('click', () => {
             iframeContainer.src = "https://houkagakuen.github.io/databank/search/";
-            iframeContainer.style.display = 'block';
+            iframeContainerWrapper.style.display = 'block';
         });
 
         document.getElementById('logout-button').addEventListener('click', handleLogout);
