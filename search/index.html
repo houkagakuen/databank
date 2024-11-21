@@ -7,136 +7,86 @@
     <style>
         body {
             font-family: Arial, sans-serif;
+            background-color: white;
             margin: 20px;
             line-height: 1.6;
-            background-color: #ffffff; /* 背景を白に設定 */
         }
-        .label-row {
+        .label-row, .checkbox-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 10px;
         }
-        .label-row span {
-            display: inline-block;
+        .label-row span, .checkbox-container span {
             margin-right: 10px;
-            vertical-align: middle;
             white-space: nowrap;
         }
-        .rectangle, select, input {
+        .rectangle {
+            display: inline-block;
             height: 20px;
             background-color: #f0f0f0;
             border: 1px solid #ddd;
-            vertical-align: middle;
-            width: calc((100% - 40px) / 4);
-            margin-right: 20px;
-            box-sizing: border-box;
-            padding: 2px 5px;
+            width: calc((100% - 50px) / 4);
         }
-        .checkbox-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px; /* チェックボックス間の余白 */
-            margin-bottom: 20px;
+        .select-box {
+            width: calc((100% - 50px) / 4);
+            height: 24px;
         }
-        .checkbox-group label {
-            display: flex;
-            align-items: center;
-            gap: 5px; /* チェックボックスとラベルの間隔 */
-        }
-        .checkbox-group input[type="checkbox"] {
-            accent-color: green;
-            width: 18px;
-            height: 18px;
-        }
-        .search-row {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 20px;
+        .checkbox-container input {
+            margin-right: 5px;
         }
         .search-button {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 40px;
-            width: calc(100% - 20px);
+            height: 60px;
             background-color: #006400;
             color: white;
-            font-size: 14px;
-            font-weight: bold;
             border: none;
+            width: 100%;
+            font-size: 24px;
             cursor: pointer;
         }
-        .divider {
-            margin: 20px 0;
-            border-top: 1px solid #ddd;
-        }
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            width: calc(100% - 20px);
-            margin: 0 auto;
-        }
-        .grid-rectangle {
-            height: 180px;
-            background-color: #f0f0f0;
-            border: 1px solid #ddd;
-            position: relative;
+        .result-container {
             display: flex;
-            align-items: center;
-            padding: 10px;
-            box-sizing: border-box;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
         }
-        .photo-box {
-            width: 102px;
-            height: 153px;
-            background-color: #dcdcdc;
-            border: 1px solid #aaa;
-            margin-right: 10px;
-            flex-shrink: 0;
+        .result-card {
+            display: flex;
+            flex-direction: column;
+            width: calc((100% - 45px) / 3);
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+        .photo {
             background-size: cover;
             background-position: center;
+            height: 150px;
+            margin-bottom: 10px;
         }
         .info-text {
             font-size: 14px;
-            line-height: 1.8;
         }
     </style>
 </head>
 <body>
     <h1>生徒検索データベース</h1>
 
-    <!-- 検索フォーム -->
     <div class="label-row">
-        <span>苗字</span>
-        <input type="text" id="lastName" class="rectangle">
-        <span>名前</span>
-        <input type="text" id="firstName" class="rectangle">
-        <span>セイ</span>
-        <input type="text" id="sei" class="rectangle">
-        <span>メイ</span>
-        <input type="text" id="mei" class="rectangle">
+        <span>苗字</span><input class="rectangle" id="lastName" placeholder="苗字">
+        <span>名前</span><input class="rectangle" id="firstName" placeholder="名前">
+        <span>セイ</span><input class="rectangle" id="sei" placeholder="セイ">
+        <span>メイ</span><input class="rectangle" id="mei" placeholder="メイ">
     </div>
 
     <div class="label-row">
         <span>性別</span>
-        <select id="gender" class="rectangle">
+        <select class="select-box" id="gender">
             <option value="">選択</option>
             <option value="オス">オス</option>
             <option value="メス">メス</option>
         </select>
-        <span>血液</span>
-        <select id="bloodType" class="rectangle">
-            <option value="">選択</option>
-            <option value="A">A</option>
-            <option value="B">B</option>
-            <option value="AB">AB</option>
-            <option value="O">O</option>
-        </select>
-        <span>施設</span>
-        <select id="rank" class="rectangle">
+        <span>階級</span>
+        <select class="select-box" id="rank">
             <option value="">選択</option>
             <option value="A">A</option>
             <option value="B">B</option>
@@ -144,24 +94,20 @@
             <option value="D">D</option>
             <option value="E">E</option>
         </select>
-        <span>番号</span>
-        <input type="text" id="id" class="rectangle">
+        <span>罪名</span><input class="rectangle" id="crime" placeholder="罪名">
     </div>
 
-    <div class="checkbox-group">
-        <label><input type="checkbox" id="kobe" checked>神戸本院</label>
-        <label><input type="checkbox" id="tochigi" checked>栃木県黒羽分院</label>
-        <label><input type="checkbox" id="nagoya" checked>愛知県名古屋第３分院</label>
-        <label><input type="checkbox" id="hiroshima" checked>広島県広島第４分院</label>
-        <label><input type="checkbox" id="fukuoka" checked>福岡県福岡第５分院</label>
+    <div class="checkbox-container">
+        <span><input type="checkbox" id="facilityKobe" checked>神戸本院</span>
+        <span><input type="checkbox" id="facilityTochigi" checked>栃木県黒羽分院</span>
+        <span><input type="checkbox" id="facilityAichi" checked>愛知県名古屋第３分院</span>
+        <span><input type="checkbox" id="facilityHiroshima" checked>広島県広島第４分院</span>
+        <span><input type="checkbox" id="facilityFukuoka" checked>福岡県福岡第５分院</span>
     </div>
 
-    <div class="search-row">
-        <button class="search-button" onclick="search()">検　索</button>
-    </div>
+    <button class="search-button" onclick="performSearch()">検　索</button>
 
-    <div class="divider"></div>
-    <div id="results" class="grid-container"></div>
+    <div class="result-container" id="resultsContainer"></div>
 
     <script>
         const students = [
@@ -172,60 +118,85 @@
                 sei: "コイズミ",
                 mei: "トワコ",
                 gender: "メス",
-                bloodType: "A",
                 rank: "E",
-                birthYear: "2009",
-                birthMonth: "12",
-                birthDay: "7",
                 crime: "売春防止法違反",
-                entryYear: "2023",
-                entryMonth: "7",
-                exitYear: "2026",
-                exitMonth: "7",
                 facility: "神戸本院",
                 photo: "https://houkagakuen.github.io/databank/search/204-小泉十和子/IMG_0770.jpeg"
+            },
+            {
+                id: "133",
+                lastName: "西田",
+                firstName: "昂太",
+                sei: "ニシダ",
+                mei: "コウタ",
+                gender: "オス",
+                rank: "A",
+                crime: "殺人罪",
+                facility: "神戸本院",
+                photo: "https://houkagakuen.github.io/databank/search/portrait/IMG_0947.jpeg"
+            },
+            {
+                id: "101",
+                lastName: "水川",
+                firstName: "惺",
+                sei: "ミズカワ",
+                mei: "セイ",
+                gender: "メス",
+                rank: "A",
+                crime: "殺人罪・窃盗罪・住居侵入罪",
+                facility: "神戸本院",
+                photo: "https://houkagakuen.github.io/databank/search/portrait/IMG_0937.jpeg"
+            },
+            {
+                id: "109",
+                lastName: "堀田",
+                firstName: "侑生",
+                sei: "ホッタ",
+                mei: "アオイ",
+                gender: "オス",
+                rank: "C",
+                crime: "詐欺罪・窃盗罪",
+                facility: "神戸本院",
+                photo: "https://houkagakuen.github.io/databank/search/portrait/IMG_0944.jpeg"
+            },
+            {
+                id: "127",
+                lastName: "小泉",
+                firstName: "凛桜",
+                sei: "コイズミ",
+                mei: "リオ",
+                gender: "メス",
+                rank: "C",
+                crime: "殺人罪",
+                facility: "神戸本院",
+                photo: "https://houkagakuen.github.io/databank/search/301-%E5%B0%8F%E6%B3%89%E5%87%9B%E6%A1%9C/IMG_0771.jpeg"
             }
         ];
 
-        function search() {
-            const filters = {
-                lastName: document.getElementById("lastName").value,
-                firstName: document.getElementById("firstName").value,
-                sei: document.getElementById("sei").value,
-                mei: document.getElementById("mei").value,
-                gender: document.getElementById("gender").value,
-                bloodType: document.getElementById("bloodType").value,
-                rank: document.getElementById("rank").value,
-                id: document.getElementById("id").value,
-                facility: [
-                    document.getElementById("kobe").checked ? "神戸本院" : null,
-                    document.getElementById("tochigi").checked ? "栃木県黒羽分院" : null,
-                    document.getElementById("nagoya").checked ? "愛知県名古屋第３分院" : null,
-                    document.getElementById("hiroshima").checked ? "広島県広島第４分院" : null,
-                    document.getElementById("fukuoka").checked ? "福岡県福岡第５分院" : null
-                ].filter(Boolean)
-            };
+        function performSearch() {
+            const resultsContainer = document.getElementById("resultsContainer");
+            resultsContainer.innerHTML = "";
+            
+            const gender = document.getElementById("gender").value;
+            const rank = document.getElementById("rank").value;
+            const crime = document.getElementById("crime").value;
+            
+            const matches = students.filter(student => {
+                return (!gender || student.gender === gender) &&
+                       (!rank || student.rank === rank) &&
+                       (!crime || student.crime.includes(crime));
+            });
 
-            const filteredStudents = students.filter(student =>
-                Object.keys(filters).every(key =>
-                    Array.isArray(filters[key])
-                        ? filters[key].includes(student[key])
-                        : !filters[key] || student[key].includes(filters[key])
-                )
-            );
-
-            if (filteredStudents.length === 0) {
+            if (matches.length === 0) {
                 alert("一致する生徒はいません");
                 return;
             }
 
-            const resultsContainer = document.getElementById("results");
-            resultsContainer.innerHTML = "";
-            filteredStudents.forEach(student => {
+            matches.forEach(student => {
                 const resultCard = document.createElement("div");
-                resultCard.className = "grid-rectangle";
+                resultCard.className = "result-card";
                 resultCard.innerHTML = `
-                    <div class="photo-box" style="background-image: url('${student.photo}')"></div>
+                    <div class="photo" style="background-image: url('${student.photo}')"></div>
                     <div class="info-text">
                         番号：${student.id}<br>
                         氏名：${student.lastName}${student.firstName}<br>
