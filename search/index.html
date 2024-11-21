@@ -7,18 +7,24 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: white;
             margin: 20px;
+            background-color: white;
             line-height: 1.6;
         }
-        .label-row, .checkbox-container {
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .label-row, .checkbox-row {
             display: flex;
-            justify-content: space-between;
+            flex-wrap: wrap;
             align-items: center;
             margin-bottom: 10px;
         }
-        .label-row span, .checkbox-container span {
+        .label-row span, .checkbox-row label {
+            display: inline-block;
             margin-right: 10px;
+            vertical-align: middle;
             white-space: nowrap;
         }
         .rectangle {
@@ -26,89 +32,81 @@
             height: 20px;
             background-color: #f0f0f0;
             border: 1px solid #ddd;
-            width: calc((100% - 50px) / 4);
+            vertical-align: middle;
+            width: calc((100% - 60px) / 4); /* 四角形の幅を均等に分割 */
         }
-        .select-box {
-            width: calc((100% - 50px) / 4);
-            height: 24px;
+        select {
+            height: 26px;
         }
-        .checkbox-container input {
-            margin-right: 5px;
-        }
-        .search-button {
-            height: 60px;
-            background-color: #006400;
-            color: white;
-            border: none;
-            width: 100%;
-            font-size: 24px;
-            cursor: pointer;
-        }
-        .result-container {
+        .button {
             display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-top: 20px;
+            justify-content: center;
+            align-items: center;
+            height: 40px;
+            background-color: green;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 20px 0;
+        }
+        .line {
+            border-top: 1px solid #ddd;
+            margin: 20px 0;
         }
         .result-card {
-            display: flex;
-            flex-direction: column;
-            width: calc((100% - 45px) / 3);
+            display: inline-block;
             border: 1px solid #ddd;
+            margin: 10px;
+            width: calc((100% - 40px) / 3); /* 横に3つ */
+            vertical-align: top;
             padding: 10px;
         }
-        .photo {
+        .result-card .photo {
+            width: 100%;
+            aspect-ratio: 2 / 3;
             background-size: cover;
             background-position: center;
-            height: 150px;
             margin-bottom: 10px;
-        }
-        .info-text {
-            font-size: 14px;
         }
     </style>
 </head>
 <body>
     <h1>生徒検索データベース</h1>
-
     <div class="label-row">
-        <span>苗字</span><input class="rectangle" id="lastName" placeholder="苗字">
-        <span>名前</span><input class="rectangle" id="firstName" placeholder="名前">
-        <span>セイ</span><input class="rectangle" id="sei" placeholder="セイ">
-        <span>メイ</span><input class="rectangle" id="mei" placeholder="メイ">
+        <span>苗字</span><input type="text" id="lastName" class="rectangle">
+        <span>名前</span><input type="text" id="firstName" class="rectangle">
+        <span>セイ</span><input type="text" id="sei" class="rectangle">
+        <span>メイ</span><input type="text" id="mei" class="rectangle">
     </div>
-
     <div class="label-row">
         <span>性別</span>
-        <select class="select-box" id="gender">
-            <option value="">選択</option>
+        <select id="gender" class="rectangle">
+            <option value="">--選択--</option>
             <option value="オス">オス</option>
             <option value="メス">メス</option>
         </select>
         <span>階級</span>
-        <select class="select-box" id="rank">
-            <option value="">選択</option>
+        <select id="rank" class="rectangle">
+            <option value="">--選択--</option>
             <option value="A">A</option>
             <option value="B">B</option>
             <option value="C">C</option>
             <option value="D">D</option>
             <option value="E">E</option>
         </select>
-        <span>罪名</span><input class="rectangle" id="crime" placeholder="罪名">
+        <span>罪名</span><input type="text" id="crime" class="rectangle">
     </div>
-
-    <div class="checkbox-container">
-        <span><input type="checkbox" id="facilityKobe" checked>神戸本院</span>
-        <span><input type="checkbox" id="facilityTochigi" checked>栃木県黒羽分院</span>
-        <span><input type="checkbox" id="facilityAichi" checked>愛知県名古屋第３分院</span>
-        <span><input type="checkbox" id="facilityHiroshima" checked>広島県広島第４分院</span>
-        <span><input type="checkbox" id="facilityFukuoka" checked>福岡県福岡第５分院</span>
+    <div class="checkbox-row">
+        <label><input type="checkbox" class="facility-checkbox" value="神戸本院" checked>神戸本院</label>
+        <label><input type="checkbox" class="facility-checkbox" value="栃木県黒羽分院" checked>栃木県黒羽分院</label>
+        <label><input type="checkbox" class="facility-checkbox" value="愛知県名古屋第３分院" checked>愛知県名古屋第３分院</label>
+        <label><input type="checkbox" class="facility-checkbox" value="広島県広島第４分院" checked>広島県広島第４分院</label>
+        <label><input type="checkbox" class="facility-checkbox" value="福岡県福岡第５分院" checked>福岡県福岡第５分院</label>
     </div>
-
-    <button class="search-button" onclick="performSearch()">検　索</button>
-
-    <div class="result-container" id="resultsContainer"></div>
-
+    <div class="button" id="searchButton">検索</div>
+    <div class="line"></div>
+    <div id="results"></div>
     <script>
         const students = [
             {
@@ -143,7 +141,7 @@
                 mei: "セイ",
                 gender: "メス",
                 rank: "A",
-                crime: "殺人罪・窃盗罪・住居侵入罪",
+                crime: "殺人罪・住居侵入罪",
                 facility: "神戸本院",
                 photo: "https://houkagakuen.github.io/databank/search/portrait/IMG_0937.jpeg"
             },
@@ -173,42 +171,19 @@
             }
         ];
 
-        function performSearch() {
-            const resultsContainer = document.getElementById("resultsContainer");
+        document.getElementById("searchButton").addEventListener("click", function () {
+            const resultsContainer = document.getElementById("results");
             resultsContainer.innerHTML = "";
-            
-            const gender = document.getElementById("gender").value;
-            const rank = document.getElementById("rank").value;
-            const crime = document.getElementById("crime").value;
-            
-            const matches = students.filter(student => {
-                return (!gender || student.gender === gender) &&
-                       (!rank || student.rank === rank) &&
-                       (!crime || student.crime.includes(crime));
-            });
-
-            if (matches.length === 0) {
-                alert("一致する生徒はいません");
-                return;
-            }
-
-            matches.forEach(student => {
+            students.forEach(student => {
                 const resultCard = document.createElement("div");
-                resultCard.className = "result-card";
+                resultCard.classList.add("result-card");
                 resultCard.innerHTML = `
                     <div class="photo" style="background-image: url('${student.photo}')"></div>
-                    <div class="info-text">
-                        番号：${student.id}<br>
-                        氏名：${student.lastName}${student.firstName}<br>
-                        カナ：${student.sei}${student.mei}<br>
-                        性別：${student.gender}<br>
-                        施設：${student.facility}<br>
-                        罪名：${student.crime}
-                    </div>
+                    <div>番号：${student.id}<br>氏名：${student.lastName}${student.firstName}<br>カナ：${student.sei}${student.mei}<br>性別：${student.gender}<br>施設：${student.facility}<br>罪名：${student.crime}</div>
                 `;
                 resultsContainer.appendChild(resultCard);
             });
-        }
+        });
     </script>
 </body>
 </html>
