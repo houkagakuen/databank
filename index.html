@@ -159,7 +159,7 @@
 <body>
 
     <!-- ヘッダー -->
-    <header id="main-header">
+    <header id="main-header" style="display: none;">
         <div class="logo-title">
             <img src="https://houkagakuen.github.io/databank/logo.jpeg" alt="蜂窩学園ロゴ">
             <h1>蜂窩学園データバンク</h1>
@@ -175,7 +175,7 @@
     </header>
 
     <!-- コンテンツエリア -->
-    <div id="content-area">
+    <div id="content-area" style="display: none;">
         <iframe id="iframe-container" src=""></iframe>
     </div>
 
@@ -224,12 +224,14 @@
         function showMainContent() {
             document.getElementById('login-container').style.display = 'none';
             document.getElementById('main-header').style.display = 'flex';
-            document.getElementById('logout-button').style.display = 'inline'; // ログアウトボタンを表示
+            document.getElementById('content-area').style.display = 'block';
+            document.getElementById('logout-button').style.display = 'inline';
         }
 
         function showLoginScreen() {
             document.getElementById('login-container').style.display = 'block';
             document.getElementById('main-header').style.display = 'none';
+            document.getElementById('content-area').style.display = 'none';
         }
 
         // 生徒管理クリック時の処理
