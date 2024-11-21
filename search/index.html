@@ -10,26 +10,27 @@
             margin: 20px;
             line-height: 1.6;
         }
-        .label-row, .checkbox-row {
+        .label-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 10px;
         }
-        .label-row span, .checkbox-label span {
+        .label-row span {
+            display: inline-block;
             margin-right: 10px;
             vertical-align: middle;
             white-space: nowrap;
         }
         .rectangle, select, input {
-            height: 30px;
+            height: 20px;
             background-color: #f0f0f0;
             border: 1px solid #ddd;
             vertical-align: middle;
             width: calc((100% - 40px) / 4);
             margin-right: 20px;
             box-sizing: border-box;
-            padding: 5px;
+            padding: 2px 5px;
         }
         .search-row {
             display: flex;
@@ -42,7 +43,7 @@
             justify-content: center;
             align-items: center;
             height: 40px;
-            width: 200px;
+            width: calc(100% - 20px);
             background-color: #006400;
             color: white;
             font-size: 14px;
@@ -62,7 +63,7 @@
             margin: 0 auto;
         }
         .grid-rectangle {
-            height: 200px;
+            height: 180px;
             background-color: #f0f0f0;
             border: 1px solid #ddd;
             position: relative;
@@ -72,8 +73,8 @@
             box-sizing: border-box;
         }
         .photo-box {
-            width: 120px;
-            height: 180px;
+            width: 102px;
+            height: 153px;
             background-color: #dcdcdc;
             border: 1px solid #aaa;
             margin-right: 10px;
@@ -90,13 +91,16 @@
             font-size: 16px;
             color: red;
         }
-        .checkbox {
-            margin-right: 10px;
-            cursor: pointer;
-        }
-        .checkbox-label {
+        .checkbox-group {
             display: flex;
-            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        }
+        .checkbox-group label {
+            margin-right: 10px;
+        }
+        .checkbox-group input {
+            margin-right: 5px;
         }
     </style>
 </head>
@@ -166,27 +170,12 @@
     </div>
 
     <!-- 刑務所チェックボックス -->
-    <div class="checkbox-row">
-        <label class="checkbox-label">
-            <input type="checkbox" id="kobe" class="checkbox" checked>
-            <span>神戸本院</span>
-        </label>
-        <label class="checkbox-label">
-            <input type="checkbox" id="tochigi" class="checkbox" checked>
-            <span>栃木県黒羽分院</span>
-        </label>
-        <label class="checkbox-label">
-            <input type="checkbox" id="nagoya" class="checkbox" checked>
-            <span>愛知県名古屋第３分院</span>
-        </label>
-        <label class="checkbox-label">
-            <input type="checkbox" id="hiroshima" class="checkbox" checked>
-            <span>広島県広島第４分院</span>
-        </label>
-        <label class="checkbox-label">
-            <input type="checkbox" id="fukuoka" class="checkbox" checked>
-            <span>福岡県福岡第５分院</span>
-        </label>
+    <div class="checkbox-group">
+        <label><input type="checkbox" id="nagoya" checked> 名古屋本院</label>
+        <label><input type="checkbox" id="tochigi" checked> 栃木県黒羽分院</label>
+        <label><input type="checkbox" id="kobe" checked> 兵庫県神戸第３分院</label>
+        <label><input type="checkbox" id="hiroshima" checked> 広島県広島第４分院</label>
+        <label><input type="checkbox" id="fukuoka" checked> 福岡県福岡第５分院</label>
     </div>
 
     <!-- 検索ボタン -->
@@ -199,9 +188,10 @@
     <div id="results" class="grid-container"></div>
 
     <script>
+        // 登録されているデータ
         const students = [
             {
-                id: "204",
+                id: "104",
                 lastName: "小泉",
                 firstName: "十和子",
                 sei: "コイズミ",
@@ -209,7 +199,6 @@
                 gender: "メス",
                 bloodType: "A",
                 rank: "E",
-                facility: "神戸本院",
                 birthYear: "2009",
                 birthMonth: "12",
                 birthDay: "7",
@@ -218,6 +207,7 @@
                 entryMonth: "7",
                 exitYear: "2026",
                 exitMonth: "7",
+                facility: "兵庫県神戸第３分院",
                 photo: "https://houkagakuen.github.io/databank/search/204-小泉十和子/IMG_0770.jpeg"
             },
             {
@@ -229,7 +219,6 @@
                 gender: "オス",
                 bloodType: "AB",
                 rank: "A",
-                facility: "栃木県黒羽分院",
                 birthYear: "2010",
                 birthMonth: "7",
                 birthDay: "8",
@@ -238,6 +227,7 @@
                 entryMonth: "3",
                 exitYear: "2029",
                 exitMonth: "8",
+                facility: "栃木県黒羽分院",
                 photo: "https://houkagakuen.github.io/databank/search/portrait/IMG_0947.jpeg"
             },
             {
@@ -249,7 +239,6 @@
                 gender: "メス",
                 bloodType: "O",
                 rank: "A",
-                facility: "愛知県名古屋第３分院",
                 birthYear: "2008",
                 birthMonth: "7",
                 birthDay: "8",
@@ -258,86 +247,67 @@
                 entryMonth: "9",
                 exitYear: "2035",
                 exitMonth: "3",
+                facility: "広島県広島第４分院",
                 photo: "https://houkagakuen.github.io/databank/search/portrait/IMG_0937.jpeg"
             }
         ];
 
+        // 検索処理
         function search() {
-            const lastName = document.getElementById("lastName").value.trim();
-            const firstName = document.getElementById("firstName").value.trim();
-            const sei = document.getElementById("sei").value.trim();
-            const mei = document.getElementById("mei").value.trim();
+            const lastName = document.getElementById("lastName").value.toLowerCase();
+            const firstName = document.getElementById("firstName").value.toLowerCase();
+            const sei = document.getElementById("sei").value.toLowerCase();
+            const mei = document.getElementById("mei").value.toLowerCase();
             const gender = document.getElementById("gender").value;
             const bloodType = document.getElementById("bloodType").value;
             const rank = document.getElementById("rank").value;
-            const id = document.getElementById("id").value.trim();
-            const birthYear = document.getElementById("birthYear").value.trim();
-            const birthMonth = document.getElementById("birthMonth").value.trim();
-            const birthDay = document.getElementById("birthDay").value.trim();
-            const crime = document.getElementById("crime").value.trim();
-            const entryYear = document.getElementById("entryYear").value.trim();
-            const entryMonth = document.getElementById("entryMonth").value.trim();
-            const exitYear = document.getElementById("exitYear").value.trim();
-            const exitMonth = document.getElementById("exitMonth").value.trim();
+            const facilityFilters = [
+                document.getElementById("nagoya").checked && "名古屋本院",
+                document.getElementById("tochigi").checked && "栃木県黒羽分院",
+                document.getElementById("kobe").checked && "兵庫県神戸第３分院",
+                document.getElementById("hiroshima").checked && "広島県広島第４分院",
+                document.getElementById("fukuoka").checked && "福岡県福岡第５分院"
+            ].filter(Boolean);
 
-            const facilities = [];
-            if (document.getElementById("kobe").checked) facilities.push("神戸本院");
-            if (document.getElementById("tochigi").checked) facilities.push("栃木県黒羽分院");
-            if (document.getElementById("nagoya").checked) facilities.push("愛知県名古屋第３分院");
-            if (document.getElementById("hiroshima").checked) facilities.push("広島県広島第４分院");
-            if (document.getElementById("fukuoka").checked) facilities.push("福岡県福岡第５分院");
-
-            const filteredResults = students.filter(student => {
-                return (!lastName || student.lastName.includes(lastName)) &&
-                    (!firstName || student.firstName.includes(firstName)) &&
-                    (!sei || student.sei.includes(sei)) &&
-                    (!mei || student.mei.includes(mei)) &&
-                    (!gender || student.gender === gender) &&
-                    (!bloodType || student.bloodType === bloodType) &&
-                    (!rank || student.rank === rank) &&
-                    (!id || student.id.includes(id)) &&
-                    (!birthYear || student.birthYear.includes(birthYear)) &&
-                    (!birthMonth || student.birthMonth.includes(birthMonth)) &&
-                    (!birthDay || student.birthDay.includes(birthDay)) &&
-                    (!crime || student.crime.includes(crime)) &&
-                    (!entryYear || student.entryYear.includes(entryYear)) &&
-                    (!entryMonth || student.entryMonth.includes(entryMonth)) &&
-                    (!exitYear || student.exitYear.includes(exitYear)) &&
-                    (!exitMonth || student.exitMonth.includes(exitMonth)) &&
-                    (facilities.length === 0 || facilities.includes(student.facility));
+            // 結果表示用
+            const results = students.filter(student => {
+                return (
+                    (lastName === "" || student.lastName.toLowerCase().includes(lastName)) &&
+                    (firstName === "" || student.firstName.toLowerCase().includes(firstName)) &&
+                    (sei === "" || student.sei.toLowerCase().includes(sei)) &&
+                    (mei === "" || student.mei.toLowerCase().includes(mei)) &&
+                    (gender === "" || student.gender === gender) &&
+                    (bloodType === "" || student.bloodType === bloodType) &&
+                    (rank === "" || student.rank === rank) &&
+                    (facilityFilters.length === 0 || facilityFilters.includes(student.facility))
+                );
             });
 
-            const resultsContainer = document.getElementById("results");
-            resultsContainer.innerHTML = "";
+            // 結果表示エリアの更新
+            const resultsDiv = document.getElementById("results");
+            resultsDiv.innerHTML = "";
 
-            if (filteredResults.length === 0) {
-                resultsContainer.innerHTML = "<p class='no-results'>一致する生徒はいません</p>";
+            if (results.length === 0) {
+                resultsDiv.innerHTML = `<div class="no-results">一致する生徒はいません</div>`;
             } else {
-                filteredResults.forEach(student => {
-                    const studentBox = document.createElement("div");
-                    studentBox.classList.add("grid-rectangle");
+                results.forEach(student => {
+                    const studentDiv = document.createElement("div");
+                    studentDiv.classList.add("grid-rectangle");
 
-                    const photoBox = document.createElement("div");
-                    photoBox.classList.add("photo-box");
-                    photoBox.style.backgroundImage = `url(${student.photo})`;
-
-                    const infoText = document.createElement("div");
-                    infoText.classList.add("info-text");
-                    infoText.innerHTML = `
-                        <strong>${student.lastName} ${student.firstName}</strong><br>
-                        性別: ${student.gender}<br>
-                        血液型: ${student.bloodType}<br>
-                        階級: ${student.rank}<br>
-                        施設: ${student.facility}<br>
-                        生年: ${student.birthYear}年 ${student.birthMonth}月 ${student.birthDay}日<br>
-                        罪名: ${student.crime}<br>
-                        入所年: ${student.entryYear}年 ${student.entryMonth}月<br>
-                        退所年: ${student.exitYear}年 ${student.exitMonth}月
+                    studentDiv.innerHTML = `
+                        <div class="photo-box" style="background-image: url('${student.photo}')"></div>
+                        <div class="info-text">
+                            <div>番号：${student.id}</div>
+                            <div>氏名：${student.lastName}${student.firstName}</div>
+                            <div>カナ：${student.sei}${student.mei}</div>
+                            <div>性別：${student.gender}</div>
+                            <div>施設：${student.facility}</div>
+                            <div>罪名：${student.crime}</div>
+                            <div>入年：${student.entryYear} 入月：${student.entryMonth}</div>
+                            <div>退年：${student.exitYear} 退月：${student.exitMonth}</div>
+                        </div>
                     `;
-
-                    studentBox.appendChild(photoBox);
-                    studentBox.appendChild(infoText);
-                    resultsContainer.appendChild(studentBox);
+                    resultsDiv.appendChild(studentDiv);
                 });
             }
         }
