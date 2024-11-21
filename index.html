@@ -29,6 +29,8 @@
             font-family: 'Arial', sans-serif;
             background-color: #f4f4f4;
             color: #333;
+            height: 100vh;
+            overflow: hidden; /* ログイン時にスクロールを防止 */
         }
 
         /* ヘッダーのスタイル */
@@ -86,8 +88,12 @@
 
         /* ログイン画面のスタイル */
         .login-container {
+            position: fixed; /* 常に画面中央に配置 */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); /* 完全な中央揃え */
             max-width: 400px;
-            margin: 100px auto;
+            width: 90%;
             padding: 20px;
             background: #fff;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
