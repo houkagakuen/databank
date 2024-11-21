@@ -9,6 +9,7 @@
             font-family: Arial, sans-serif;
             margin: 20px;
             line-height: 1.6;
+            background-color: #ffffff; /* 背景を白に設定 */
         }
         .label-row {
             display: flex;
@@ -35,13 +36,13 @@
         .checkbox-group {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 20px; /* チェックボックス間の余白 */
             margin-bottom: 20px;
         }
         .checkbox-group label {
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 5px; /* チェックボックスとラベルの間隔 */
         }
         .checkbox-group input[type="checkbox"] {
             accent-color: green;
@@ -101,11 +102,6 @@
         .info-text {
             font-size: 14px;
             line-height: 1.8;
-        }
-        .no-results {
-            text-align: center;
-            font-size: 16px;
-            color: red;
         }
     </style>
 </head>
@@ -210,9 +206,6 @@
                 ].filter(Boolean)
             };
 
-            const resultsContainer = document.getElementById("results");
-            resultsContainer.innerHTML = "";
-
             const filteredStudents = students.filter(student =>
                 Object.keys(filters).every(key =>
                     Array.isArray(filters[key])
@@ -222,10 +215,12 @@
             );
 
             if (filteredStudents.length === 0) {
-                resultsContainer.innerHTML = `<div class="no-results">一致する生徒はいません</div>`;
+                alert("一致する生徒はいません");
                 return;
             }
 
+            const resultsContainer = document.getElementById("results");
+            resultsContainer.innerHTML = "";
             filteredStudents.forEach(student => {
                 const resultCard = document.createElement("div");
                 resultCard.className = "grid-rectangle";
