@@ -23,15 +23,14 @@
             white-space: nowrap;
         }
         .rectangle, select, input {
-            display: inline-block;
-            height: 30px;
+            height: 20px;
             background-color: #f0f0f0;
             border: 1px solid #ddd;
             vertical-align: middle;
             width: calc((100% - 40px) / 4);
             margin-right: 20px;
-            padding-left: 5px;
             box-sizing: border-box;
+            padding: 2px 5px;
         }
         .search-row {
             display: flex;
@@ -64,7 +63,7 @@
             margin: 0 auto;
         }
         .grid-rectangle {
-            min-height: 180px;
+            height: 180px;
             background-color: #f0f0f0;
             border: 1px solid #ddd;
             position: relative;
@@ -90,107 +89,35 @@
         .no-results {
             text-align: center;
             font-size: 16px;
-            color: #555;
-            margin-top: 20px;
+            color: red;
         }
     </style>
-    <script>
-        // 生徒データを登録
-        const students = [
-            {
-                photo: "https://houkagakuen.github.io/databank/search/204-小泉十和子/IMG_0770.jpeg",
-                number: 204,
-                lastName: "小泉",
-                firstName: "十和子",
-                lastKana: "コイズミ",
-                firstKana: "トワコ",
-                gender: "メス",
-                bloodType: "A",
-                rank: "E",
-                birthYear: 2009,
-                birthMonth: 12,
-                birthDay: 7,
-                crime: "売春防止法違反",
-                entryYear: 2023,
-                entryMonth: 7,
-                exitYear: 2026,
-                exitMonth: 7
-            }
-        ];
-
-        function searchStudents() {
-            // 入力値を取得
-            const lastName = document.getElementById("lastName").value.trim();
-            const firstName = document.getElementById("firstName").value.trim();
-            const lastKana = document.getElementById("lastKana").value.trim();
-            const firstKana = document.getElementById("firstKana").value.trim();
-            const gender = document.getElementById("gender").value;
-            const bloodType = document.getElementById("bloodType").value;
-            const rank = document.getElementById("rank").value;
-
-            // 結果をフィルタリング
-            const results = students.filter(student => {
-                return (!lastName || student.lastName.includes(lastName)) &&
-                    (!firstName || student.firstName.includes(firstName)) &&
-                    (!lastKana || student.lastKana.includes(lastKana)) &&
-                    (!firstKana || student.firstKana.includes(firstKana)) &&
-                    (!gender || student.gender === gender) &&
-                    (!bloodType || student.bloodType === bloodType) &&
-                    (!rank || student.rank === rank);
-            });
-
-            // 結果を表示
-            const container = document.querySelector(".grid-container");
-            container.innerHTML = ""; // 現在の結果をクリア
-
-            if (results.length === 0) {
-                container.innerHTML = '<div class="no-results">一致する生徒はいません</div>';
-                return;
-            }
-
-            results.sort((a, b) => a.number - b.number); // 番号順にソート
-
-            results.forEach(student => {
-                const resultElement = document.createElement("div");
-                resultElement.classList.add("grid-rectangle");
-                resultElement.innerHTML = `
-                    <div class="photo-box" style="background-image: url('${student.photo}')"></div>
-                    <div class="info-text">
-                        番号：${student.number}<br>
-                        氏名：${student.lastName}${student.firstName}<br>
-                        カナ：${student.lastKana}${student.firstKana}<br>
-                        性別：${student.gender}<br>
-                        階級：${student.rank}<br>
-                        罪名：${student.crime}
-                    </div>
-                `;
-                container.appendChild(resultElement);
-            });
-        }
-    </script>
 </head>
 <body>
-    <!-- 検索入力 -->
+    <h1>生徒検索データベース</h1>
+
+    <!-- 検索フォーム -->
     <div class="label-row">
         <span>苗字</span>
         <input type="text" id="lastName" class="rectangle">
         <span>名前</span>
         <input type="text" id="firstName" class="rectangle">
         <span>セイ</span>
-        <input type="text" id="lastKana" class="rectangle">
+        <input type="text" id="sei" class="rectangle">
         <span>メイ</span>
-        <input type="text" id="firstKana" class="rectangle">
+        <input type="text" id="mei" class="rectangle">
     </div>
+
     <div class="label-row">
         <span>性別</span>
         <select id="gender" class="rectangle">
-            <option value="">選択しない</option>
+            <option value="">選択</option>
             <option value="オス">オス</option>
             <option value="メス">メス</option>
         </select>
         <span>血液</span>
         <select id="bloodType" class="rectangle">
-            <option value="">選択しない</option>
+            <option value="">選択</option>
             <option value="A">A</option>
             <option value="B">B</option>
             <option value="AB">AB</option>
@@ -198,7 +125,7 @@
         </select>
         <span>階級</span>
         <select id="rank" class="rectangle">
-            <option value="">選択しない</option>
+            <option value="">選択</option>
             <option value="A">A</option>
             <option value="B">B</option>
             <option value="C">C</option>
@@ -206,16 +133,115 @@
             <option value="E">E</option>
         </select>
         <span>番号</span>
-        <input type="number" id="number" class="rectangle">
+        <input type="text" id="id" class="rectangle">
+    </div>
+
+    <div class="label-row">
+        <span>生年</span>
+        <input type="text" id="birthYear" class="rectangle">
+        <span>生月</span>
+        <input type="text" id="birthMonth" class="rectangle">
+        <span>生日</span>
+        <input type="text" id="birthDay" class="rectangle">
+        <span>罪名</span>
+        <input type="text" id="crime" class="rectangle">
+    </div>
+
+    <div class="label-row">
+        <span>入年</span>
+        <input type="text" id="entryYear" class="rectangle">
+        <span>入月</span>
+        <input type="text" id="entryMonth" class="rectangle">
+        <span>退年</span>
+        <input type="text" id="exitYear" class="rectangle">
+        <span>退月</span>
+        <input type="text" id="exitMonth" class="rectangle">
     </div>
 
     <!-- 検索ボタン -->
     <div class="search-row">
-        <button class="search-button" onclick="searchStudents()">検　索</button>
+        <button class="search-button" onclick="search()">検　索</button>
     </div>
 
     <!-- 検索結果 -->
     <div class="divider"></div>
-    <div class="grid-container"></div>
+    <div id="results" class="grid-container"></div>
+
+    <script>
+        // 登録されているデータ
+        const students = [
+            {
+                id: "204",
+                lastName: "小泉",
+                firstName: "十和子",
+                sei: "コイズミ",
+                mei: "トワコ",
+                gender: "メス",
+                bloodType: "A",
+                rank: "E",
+                birthYear: "2009",
+                birthMonth: "12",
+                birthDay: "7",
+                crime: "売春防止法違反",
+                entryYear: "2023",
+                entryMonth: "7",
+                exitYear: "2026",
+                exitMonth: "7",
+                photo: "https://houkagakuen.github.io/databank/search/204-小泉十和子/IMG_0770.jpeg"
+            }
+        ];
+
+        function search() {
+            const filters = {
+                lastName: document.getElementById("lastName").value,
+                firstName: document.getElementById("firstName").value,
+                sei: document.getElementById("sei").value,
+                mei: document.getElementById("mei").value,
+                gender: document.getElementById("gender").value,
+                bloodType: document.getElementById("bloodType").value,
+                rank: document.getElementById("rank").value,
+                id: document.getElementById("id").value,
+                birthYear: document.getElementById("birthYear").value,
+                birthMonth: document.getElementById("birthMonth").value,
+                birthDay: document.getElementById("birthDay").value,
+                crime: document.getElementById("crime").value,
+                entryYear: document.getElementById("entryYear").value,
+                entryMonth: document.getElementById("entryMonth").value,
+                exitYear: document.getElementById("exitYear").value,
+                exitMonth: document.getElementById("exitMonth").value
+            };
+
+            const resultsContainer = document.getElementById("results");
+            resultsContainer.innerHTML = "";
+
+            const filteredStudents = students.filter(student =>
+                Object.keys(filters).every(key => 
+                    !filters[key] || student[key].includes(filters[key])
+                )
+            );
+
+            if (filteredStudents.length === 0) {
+                resultsContainer.innerHTML = `<div class="no-results">一致する生徒はいません</div>`;
+                return;
+            }
+
+            filteredStudents.forEach(student => {
+                const resultCard = document.createElement("div");
+                resultCard.className = "grid-rectangle";
+                resultCard.innerHTML = `
+                    <div class="photo-box" style="background-image: url('${student.photo}')"></div>
+                    <div class="info-text">
+                        番号：${student.id}<br>
+                        氏名：${student.lastName}${student.firstName}<br>
+                        カナ：${student.sei}${student.mei}<br>
+                        性別：${student.gender}<br>
+                        階級：${student.rank}<br>
+                        罪名：${student.crime}
+                    </div>
+                `;
+                resultsContainer.appendChild(resultCard);
+            });
+        }
+    </script>
 </body>
 </html>
