@@ -7,110 +7,138 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
+            margin: 0;
+            padding: 0;
             background-color: white;
-            line-height: 1.6;
         }
         h1 {
-            font-size: 24px;
-            margin-bottom: 20px;
+            text-align: center;
+            margin: 20px 0;
         }
-        .label-row, .checkbox-row {
+        .form-container {
+            max-width: 800px;
+            margin: 0 auto 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+        .form-row {
             display: flex;
             flex-wrap: wrap;
-            align-items: center;
             margin-bottom: 10px;
         }
-        .label-row span, .checkbox-row label {
-            display: inline-block;
+        .form-row label {
+            flex: 1;
+            min-width: 120px;
             margin-right: 10px;
-            vertical-align: middle;
-            white-space: nowrap;
         }
-        .rectangle {
-            display: inline-block;
-            height: 20px;
-            background-color: #f0f0f0;
-            border: 1px solid #ddd;
-            vertical-align: middle;
-            width: calc((100% - 60px) / 4); /* 四角形の幅を均等に分割 */
+        .form-row input, .form-row select {
+            flex: 2;
+            min-width: 200px;
         }
-        select {
-            height: 26px;
+        .checkbox-row {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 10px 0;
+        }
+        .checkbox-row label {
+            margin-right: 15px;
         }
         .button {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 40px;
+            display: block;
+            width: 100%;
+            text-align: center;
             background-color: green;
             color: white;
-            font-size: 14px;
-            font-weight: bold;
+            padding: 10px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 5px;
             cursor: pointer;
-            margin: 20px 0;
+            font-size: 16px;
         }
-        .line {
-            border-top: 1px solid #ddd;
-            margin: 20px 0;
+        .results-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
         }
         .result-card {
             display: inline-block;
-            border: 1px solid #ddd;
+            width: calc(33.333% - 20px);
             margin: 10px;
-            width: calc((100% - 40px) / 3); /* 横に3つ */
-            vertical-align: top;
+            border: 1px solid #ccc;
+            border-radius: 8px;
             padding: 10px;
+            background-color: #fff;
+            vertical-align: top;
         }
-        .result-card .photo {
+        .result-card img {
             width: 100%;
-            aspect-ratio: 2 / 3;
-            background-size: cover;
-            background-position: center;
-            margin-bottom: 10px;
+            height: auto;
+            border-radius: 8px;
+        }
+        .result-card .info {
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
     <h1>生徒検索データベース</h1>
-    <div class="label-row">
-        <span>苗字</span><input type="text" id="lastName" class="rectangle">
-        <span>名前</span><input type="text" id="firstName" class="rectangle">
-        <span>セイ</span><input type="text" id="sei" class="rectangle">
-        <span>メイ</span><input type="text" id="mei" class="rectangle">
+    <div class="form-container">
+        <div class="form-row">
+            <label for="lastName">苗字:</label>
+            <input type="text" id="lastName">
+        </div>
+        <div class="form-row">
+            <label for="firstName">名前:</label>
+            <input type="text" id="firstName">
+        </div>
+        <div class="form-row">
+            <label for="sei">セイ:</label>
+            <input type="text" id="sei">
+        </div>
+        <div class="form-row">
+            <label for="mei">メイ:</label>
+            <input type="text" id="mei">
+        </div>
+        <div class="form-row">
+            <label for="gender">性別:</label>
+            <select id="gender">
+                <option value="">--選択--</option>
+                <option value="オス">オス</option>
+                <option value="メス">メス</option>
+            </select>
+        </div>
+        <div class="form-row">
+            <label for="rank">階級:</label>
+            <select id="rank">
+                <option value="">--選択--</option>
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+                <option value="D">D</option>
+                <option value="E">E</option>
+            </select>
+        </div>
+        <div class="form-row">
+            <label for="crime">罪名:</label>
+            <input type="text" id="crime">
+        </div>
+        <div class="checkbox-row">
+            <label><input type="checkbox" class="facility-checkbox" value="神戸本院" checked> 神戸本院</label>
+            <label><input type="checkbox" class="facility-checkbox" value="栃木県黒羽分院" checked> 栃木県黒羽分院</label>
+            <label><input type="checkbox" class="facility-checkbox" value="愛知県名古屋第３分院" checked> 愛知県名古屋第３分院</label>
+            <label><input type="checkbox" class="facility-checkbox" value="広島県広島第４分院" checked> 広島県広島第４分院</label>
+            <label><input type="checkbox" class="facility-checkbox" value="福岡県福岡第５分院" checked> 福岡県福岡第５分院</label>
+        </div>
+        <button class="button" id="searchButton">検索</button>
     </div>
-    <div class="label-row">
-        <span>性別</span>
-        <select id="gender" class="rectangle">
-            <option value="">--選択--</option>
-            <option value="オス">オス</option>
-            <option value="メス">メス</option>
-        </select>
-        <span>階級</span>
-        <select id="rank" class="rectangle">
-            <option value="">--選択--</option>
-            <option value="A">A</option>
-            <option value="B">B</option>
-            <option value="C">C</option>
-            <option value="D">D</option>
-            <option value="E">E</option>
-        </select>
-        <span>罪名</span><input type="text" id="crime" class="rectangle">
-    </div>
-    <div class="checkbox-row">
-        <label><input type="checkbox" class="facility-checkbox" value="神戸本院" checked>神戸本院</label>
-        <label><input type="checkbox" class="facility-checkbox" value="栃木県黒羽分院" checked>栃木県黒羽分院</label>
-        <label><input type="checkbox" class="facility-checkbox" value="愛知県名古屋第３分院" checked>愛知県名古屋第３分院</label>
-        <label><input type="checkbox" class="facility-checkbox" value="広島県広島第４分院" checked>広島県広島第４分院</label>
-        <label><input type="checkbox" class="facility-checkbox" value="福岡県福岡第５分院" checked>福岡県福岡第５分院</label>
-    </div>
-    <div class="button" id="searchButton">検索</div>
-    <div class="line"></div>
-    <div id="results"></div>
+    <div class="results-container" id="results"></div>
     <script>
         const students = [
             {
-                id: "104",
+                id: 104,
                 lastName: "小泉",
                 firstName: "十和子",
                 sei: "コイズミ",
@@ -122,7 +150,7 @@
                 photo: "https://houkagakuen.github.io/databank/search/204-小泉十和子/IMG_0770.jpeg"
             },
             {
-                id: "133",
+                id: 133,
                 lastName: "西田",
                 firstName: "昂太",
                 sei: "ニシダ",
@@ -134,19 +162,19 @@
                 photo: "https://houkagakuen.github.io/databank/search/portrait/IMG_0947.jpeg"
             },
             {
-                id: "101",
+                id: 101,
                 lastName: "水川",
                 firstName: "惺",
                 sei: "ミズカワ",
                 mei: "セイ",
                 gender: "メス",
                 rank: "A",
-                crime: "殺人罪・住居侵入罪",
+                crime: "殺人罪・窃盗罪・住居侵入罪",
                 facility: "神戸本院",
                 photo: "https://houkagakuen.github.io/databank/search/portrait/IMG_0937.jpeg"
             },
             {
-                id: "109",
+                id: 109,
                 lastName: "堀田",
                 firstName: "侑生",
                 sei: "ホッタ",
@@ -158,7 +186,7 @@
                 photo: "https://houkagakuen.github.io/databank/search/portrait/IMG_0944.jpeg"
             },
             {
-                id: "127",
+                id: 127,
                 lastName: "小泉",
                 firstName: "凛桜",
                 sei: "コイズミ",
@@ -171,19 +199,31 @@
             }
         ];
 
-        document.getElementById("searchButton").addEventListener("click", function () {
+        function renderResults() {
             const resultsContainer = document.getElementById("results");
             resultsContainer.innerHTML = "";
+
             students.forEach(student => {
-                const resultCard = document.createElement("div");
-                resultCard.classList.add("result-card");
-                resultCard.innerHTML = `
-                    <div class="photo" style="background-image: url('${student.photo}')"></div>
-                    <div>番号：${student.id}<br>氏名：${student.lastName}${student.firstName}<br>カナ：${student.sei}${student.mei}<br>性別：${student.gender}<br>施設：${student.facility}<br>罪名：${student.crime}</div>
+                const card = document.createElement("div");
+                card.className = "result-card";
+                card.innerHTML = `
+                    <img src="${student.photo}" alt="${student.lastName}${student.firstName}">
+                    <div class="info">
+                        番号：${student.id}<br>
+                        氏名：${student.lastName} ${student.firstName}<br>
+                        セイ：${student.sei}<br>
+                        メイ：${student.mei}<br>
+                        性別：${student.gender}<br>
+                        階級：${student.rank}<br>
+                        罪名：${student.crime}<br>
+                        施設：${student.facility}<br>
+                    </div>
                 `;
-                resultsContainer.appendChild(resultCard);
+                resultsContainer.appendChild(card);
             });
-        });
+        }
+
+        document.getElementById("searchButton").addEventListener("click", renderResults);
     </script>
 </body>
 </html>
