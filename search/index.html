@@ -95,22 +95,21 @@
             display: flex;
             justify-content: space-between;
             width: 100%;
-            flex-wrap: wrap; /* チェックボックスが改行されないように調整 */
+            flex-wrap: wrap;
         }
         .checkbox-group label {
             margin-right: 10px;
-            white-space: nowrap; /* ラベルの改行を防止 */
+            white-space: nowrap;
         }
         .checkbox-group input {
             margin-right: 5px;
-            transform: scale(0.8); /* チェックボックスを小さく */
+            transform: scale(0.8);
         }
     </style>
 </head>
 <body>
     <h1>生徒検索データベース</h1>
 
-    <!-- 検索フォーム -->
     <div class="label-row">
         <span>苗字</span>
         <input type="text" id="lastName" class="rectangle">
@@ -141,10 +140,6 @@
         <select id="rank" class="rectangle">
             <option value="">選択</option>
             <option value="A">A</option>
-            <option value="B">B</option>
-            <option value="C">C</option>
-            <option value="D">D</option>
-            <option value="E">E</option>
         </select>
         <span>番号</span>
         <input type="text" id="id" class="rectangle">
@@ -172,7 +167,6 @@
         <input type="text" id="exitMonth" class="rectangle">
     </div>
 
-    <!-- 刑務所チェックボックス -->
     <div class="checkbox-group">
         <label><input type="checkbox" id="nagoya" checked> 名古屋本院</label>
         <label><input type="checkbox" id="tochigi" checked> 栃木県黒羽分院</label>
@@ -181,12 +175,10 @@
         <label><input type="checkbox" id="fukuoka" checked> 福岡県福岡第５分院</label>
     </div>
 
-    <!-- 検索ボタン -->
     <div class="search-row">
         <button class="search-button" onclick="search()">検　索</button>
     </div>
 
-    <!-- 検索結果 -->
     <div class="divider"></div>
     <div id="results" class="grid-container"></div>
 
@@ -194,7 +186,7 @@
         // 登録されているデータ
         const students = [
             {
-                id: "104",
+                id: "101",
                 lastName: "小泉",
                 firstName: "十和子",
                 sei: "コイズミ",
@@ -210,28 +202,88 @@
                 entryMonth: "7",
                 exitYear: "2026",
                 exitMonth: "7",
-                facility: "兵庫県神戸第３分院",
+                facility: "名古屋本院",
                 photo: "https://houkagakuen.github.io/databank/search/204-小泉十和子/IMG_0770.jpeg"
             },
             {
-                id: "133",
-                lastName: "西田",
-                firstName: "昂太",
-                sei: "ニシダ",
-                mei: "コウタ",
-                gender: "オス",
-                bloodType: "AB",
+                id: "102",
+                lastName: "小泉",
+                firstName: "凛桜",
+                sei: "コイズミ",
+                mei: "リオ",
+                gender: "メス",
+                bloodType: "B",
                 rank: "A",
-                birthYear: "2010",
-                birthMonth: "7",
-                birthDay: "8",
-                crime: "殺人罪",
-                entryYear: "2021",
-                entryMonth: "3",
-                exitYear: "2029",
-                exitMonth: "8",
+                birthYear: "2011",
+                birthMonth: "8",
+                birthDay: "13",
+                crime: "監禁罪",
+                entryYear: "2023",
+                entryMonth: "1",
+                exitYear: "2025",
+                exitMonth: "1",
                 facility: "栃木県黒羽分院",
-                photo: "https://houkagakuen.github.io/databank/search/portrait/IMG_0947.jpeg"
+                photo: "https://houkagakuen.github.io/databank/search/portrait/IMG_0939.jpeg"
+            },
+            {
+                id: "103",
+                lastName: "藤井",
+                firstName: "恵世",
+                sei: "フジイ",
+                mei: "アヤセ",
+                gender: "メス",
+                bloodType: "O",
+                rank: "A",
+                birthYear: "2007",
+                birthMonth: "12",
+                birthDay: "30",
+                crime: "住居侵入罪",
+                entryYear: "2023",
+                entryMonth: "10",
+                exitYear: "2025",
+                exitMonth: "8",
+                facility: "兵庫県神戸第３分院",
+                photo: "https://houkagakuen.github.io/databank/search/portrait/IMG_0940.jpeg"
+            },
+            {
+                id: "104",
+                lastName: "吉村",
+                firstName: "美咲",
+                sei: "ヨシムラ",
+                mei: "ミサキ",
+                gender: "メス",
+                bloodType: "A",
+                rank: "A",
+                birthYear: "2012",
+                birthMonth: "3",
+                birthDay: "9",
+                crime: "詐欺罪",
+                entryYear: "2024",
+                entryMonth: "10",
+                exitYear: "2031",
+                exitMonth: "10",
+                facility: "広島県広島第４分院",
+                photo: "https://houkagakuen.github.io/databank/search/portrait/IMG_0941.jpeg"
+            },
+            {
+                id: "105",
+                lastName: "西田",
+                firstName: "圭希",
+                sei: "ニシダ",
+                mei: "タマキ",
+                gender: "メス",
+                bloodType: "O",
+                rank: "A",
+                birthYear: "2013",
+                birthMonth: "1",
+                birthDay: "2",
+                crime: "殺人罪",
+                entryYear: "2024",
+                entryMonth: "7",
+                exitYear: "2036",
+                exitMonth: "1",
+                facility: "福岡県福岡第５分院",
+                photo: "https://houkagakuen.github.io/databank/search/portrait/IMG_0942.jpeg"
             },
             {
                 id: "106",
@@ -251,7 +303,7 @@
                 exitYear: "2029",
                 exitMonth: "11",
                 facility: "名古屋本院",
-                photo: "https://houkagakuen.github.io/databank/search/portrait/IMG_0943.jpeg"                
+                photo: "https://houkagakuen.github.io/databank/search/portrait/IMG_0943.jpeg"
             },
             {
                 id: "107",
@@ -272,7 +324,7 @@
                 exitMonth: "12",
                 facility: "広島県広島第４分院",
                 photo: "https://houkagakuen.github.io/databank/search/portrait/IMG_0944.jpeg"
-            }
+            },
             {
                 id: "108",
                 lastName: "櫻井",
@@ -288,110 +340,30 @@
                 crime: "死体損壊罪",
                 entryYear: "2024",
                 entryMonth: "11",
-                exitYear: "2027"
+                exitYear: "2027",
                 exitMonth: "11",
-                facility: "福岡県福岡第５分院",
+                facility: "兵庫県神戸第３分院",
                 photo: "https://houkagakuen.github.io/databank/search/portrait/IMG_0945.jpeg"
-            }
-            {
-                id: "101",
-                lastName: "水川",
-                firstName: "惺",
-                sei: "ミズカワ",
-                mei: "セイ",
-                gender: "メス",
-                bloodType: "O",
-                rank: "A",
-                birthYear: "2008",
-                birthMonth: "7",
-                birthDay: "8",
-                crime: "殺人罪・住居侵入罪",
-                entryYear: "2019",
-                entryMonth: "9",
-                exitYear: "2035",
-                exitMonth: "3",
-                facility: "広島県広島第４分院",
-                photo: "https://houkagakuen.github.io/databank/search/portrait/IMG_0937.jpeg"
             },
             {
-                id: "102",
-                lastName: "小泉",
-                firstName: "凛桜",
-                sei: "コイズミ",
-                mei: "リオ",
-                gender: "メス",
-                bloodType: "B",
-                rank: "A",
-                birthYear: "2011",
-                birthMonth: "8",
-                birthDay: "13",
-                crime: "監禁罪",
-                entryYear: "2023",
-                entryMonth: "1",
-                exitYear: "2025",
-                exitMonth: "1",
-                facility: "名古屋本院",
-                photo: "https://houkagakuen.github.io/databank/search/portrait/IMG_0939.jpeg"
-            },
-            {
-                id: "103",
-                lastName: "藤井",
-                firstName: "恵世",
-                sei: "フジイ",
-                mei: "アヤセ",
-                gender: "メス",
-                bloodType: "O",
-                rank: "A",
-                birthYear: "2007",
-                birthMonth: "12",
-                birthDay: "30",
-                crime: "住居侵入罪",
-                entryYear: "2023",
-                entryMonth: "10",
-                exitYear: "2025",
-                exitMonth: "8",
-                facility: "栃木県黒羽分院",
-                photo: "https://houkagakuen.github.io/databank/search/portrait/IMG_0940.jpeg"
-            },
-            {
-                id: "105",
-                lastName: "吉村",
-                firstName: "美咲",
-                sei: "ヨシムラ",
-                mei: "ミサキ",
-                gender: "メス",
+                id: "109",
+                lastName: "櫻井",
+                firstName: "雄斗",
+                sei: "サクライ",
+                mei: "ユウト",
+                gender: "オス",
                 bloodType: "A",
                 rank: "A",
-                birthYear: "2012",
+                birthYear: "2010",
                 birthMonth: "3",
-                birthDay: "9",
-                crime: "詐欺罪",
+                birthDay: "4",
+                crime: "強制わいせつ罪",
                 entryYear: "2024",
-                entryMonth: "10",
-                exitYear: "2031",
-                exitMonth: "10",
-                facility: "兵庫県神戸第３分院",
-                photo: "https://houkagakuen.github.io/databank/search/portrait/IMG_0941.jpeg"
-            },
-            {
-                id: "106",
-                lastName: "西田",
-                firstName: "圭希",
-                sei: "ニシダ",
-                mei: "タマキ",
-                gender: "メス",
-                bloodType: "O",
-                rank: "A",
-                birthYear: "2013",
-                birthMonth: "1",
-                birthDay: "2",
-                crime: "殺人罪",
-                entryYear: "2024",
-                entryMonth: "7",
-                exitYear: "2036",
+                entryMonth: "3",
+                exitYear: "2034",
                 exitMonth: "1",
-                facility: "広島県広島第４分院",
-                photo: "https://houkagakuen.github.io/databank/search/portrait/IMG_0942.jpeg"
+                facility: "栃木県黒羽分院",
+                photo: "https://houkagakuen.github.io/databank/search/portrait/IMG_0946.jpeg"
             }
         ];
 
