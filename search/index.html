@@ -91,20 +91,6 @@
             font-size: 16px;
             color: red;
         }
-        .checkbox-group {
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-            flex-wrap: wrap;
-        }
-        .checkbox-group label {
-            margin-right: 10px;
-            white-space: nowrap;
-        }
-        .checkbox-group input {
-            margin-right: 5px;
-            transform: scale(0.8);
-        }
     </style>
 </head>
 <body>
@@ -140,6 +126,11 @@
         <select id="rank" class="rectangle">
             <option value="">選択</option>
             <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="C">C</option>
+            <option value="D">D</option>
+            <option value="E">E</option>
+            <option value="F">F</option>
         </select>
         <span>番号</span>
         <input type="text" id="id" class="rectangle">
@@ -167,14 +158,6 @@
         <input type="text" id="exitMonth" class="rectangle">
     </div>
 
-    <div class="checkbox-group">
-        <label><input type="checkbox" id="nagoya" checked> 名古屋本院</label>
-        <label><input type="checkbox" id="tochigi" checked> 栃木県黒羽分院</label>
-        <label><input type="checkbox" id="kobe" checked> 兵庫県神戸第３分院</label>
-        <label><input type="checkbox" id="hiroshima" checked> 広島県広島第４分院</label>
-        <label><input type="checkbox" id="fukuoka" checked> 福岡県福岡第５分院</label>
-    </div>
-
     <div class="search-row">
         <button class="search-button" onclick="search()">検　索</button>
     </div>
@@ -183,7 +166,6 @@
     <div id="results" class="grid-container"></div>
 
     <script>
-        // 登録されているデータ
         const students = [
             {
                 id: "101",
@@ -202,7 +184,6 @@
                 entryMonth: "7",
                 exitYear: "2026",
                 exitMonth: "7",
-                facility: "名古屋本院",
                 photo: "https://houkagakuen.github.io/databank/search/204-小泉十和子/IMG_0770.jpeg"
             },
             {
@@ -222,172 +203,11 @@
                 entryMonth: "1",
                 exitYear: "2025",
                 exitMonth: "1",
-                facility: "栃木県黒羽分院",
                 photo: "https://houkagakuen.github.io/databank/search/portrait/IMG_0939.jpeg"
             },
-            {
-                id: "103",
-                lastName: "藤井",
-                firstName: "恵世",
-                sei: "フジイ",
-                mei: "アヤセ",
-                gender: "メス",
-                bloodType: "O",
-                rank: "A",
-                birthYear: "2007",
-                birthMonth: "12",
-                birthDay: "30",
-                crime: "住居侵入罪",
-                entryYear: "2023",
-                entryMonth: "10",
-                exitYear: "2025",
-                exitMonth: "8",
-                facility: "兵庫県神戸第３分院",
-                photo: "https://houkagakuen.github.io/databank/search/portrait/IMG_0940.jpeg"
-            },
-            {
-                id: "104",
-                lastName: "吉村",
-                firstName: "美咲",
-                sei: "ヨシムラ",
-                mei: "ミサキ",
-                gender: "メス",
-                bloodType: "A",
-                rank: "A",
-                birthYear: "2012",
-                birthMonth: "3",
-                birthDay: "9",
-                crime: "詐欺罪",
-                entryYear: "2024",
-                entryMonth: "10",
-                exitYear: "2031",
-                exitMonth: "10",
-                facility: "広島県広島第４分院",
-                photo: "https://houkagakuen.github.io/databank/search/portrait/IMG_0941.jpeg"
-            },
-            {
-                id: "105",
-                lastName: "西田",
-                firstName: "圭希",
-                sei: "ニシダ",
-                mei: "タマキ",
-                gender: "メス",
-                bloodType: "O",
-                rank: "A",
-                birthYear: "2013",
-                birthMonth: "1",
-                birthDay: "2",
-                crime: "殺人罪",
-                entryYear: "2024",
-                entryMonth: "7",
-                exitYear: "2036",
-                exitMonth: "1",
-                facility: "福岡県福岡第５分院",
-                photo: "https://houkagakuen.github.io/databank/search/portrait/IMG_0942.jpeg"
-            },
-            {
-                id: "106",
-                lastName: "加野",
-                firstName: "愛",
-                sei: "カノ",
-                mei: "マナ",
-                gender: "メス",
-                bloodType: "B",
-                rank: "A",
-                birthYear: "2008",
-                birthMonth: "12",
-                birthDay: "22",
-                crime: "窃盗罪",
-                entryYear: "2024",
-                entryMonth: "11",
-                exitYear: "2029",
-                exitMonth: "11",
-                facility: "名古屋本院",
-                photo: "https://houkagakuen.github.io/databank/search/portrait/IMG_0943.jpeg"
-            },
-            {
-                id: "107",
-                lastName: "堀田",
-                firstName: "侑生",
-                sei: "ホッタ",
-                mei: "アオイ",
-                gender: "オス",
-                bloodType: "O",
-                rank: "A",
-                birthYear: "2010",
-                birthMonth: "4",
-                birthDay: "17",
-                crime: "強制性行等致死罪",
-                entryYear: "2022",
-                entryMonth: "3",
-                exitYear: "2035",
-                exitMonth: "12",
-                facility: "広島県広島第４分院",
-                photo: "https://houkagakuen.github.io/databank/search/portrait/IMG_0944.jpeg"
-            },
-            {
-                id: "108",
-                lastName: "櫻井",
-                firstName: "遥",
-                sei: "サクライ",
-                mei: "ハルカ",
-                gender: "オス",
-                bloodType: "A",
-                rank: "A",
-                birthYear: "2012",
-                birthMonth: "5",
-                birthDay: "7",
-                crime: "死体損壊罪",
-                entryYear: "2024",
-                entryMonth: "11",
-                exitYear: "2027",
-                exitMonth: "11",
-                facility: "兵庫県神戸第３分院",
-                photo: "https://houkagakuen.github.io/databank/search/portrait/IMG_0945.jpeg"
-            },
-            {
-                id: "235",
-                lastName: "Harris",
-                firstName: "Catherine",
-                sei: "ハリス",
-                mei: "キャサリン",
-                gender: "メス",
-                bloodType: "O",
-                rank: "D",
-                birthYear: "2010",
-                birthMonth: "3",
-                birthDay: "18",
-                crime: "不法残留罪",
-                entryYear: "2024",
-                entryMonth: "8",
-                exitYear: "2026",
-                exitMonth: "12",
-                facility: "兵庫県神戸第３分院",
-                photo: "https://houkagakuen.github.io/databank/search/235-%E3%83%8F%E3%83%AA%E3%82%B9%E3%82%AD%E3%83%A3%E3%82%B5%E3%83%AA%E3%83%B3/IMG_1929.jpeg"
-            },
-            {
-                id: "109",
-                lastName: "櫻井",
-                firstName: "雄斗",
-                sei: "サクライ",
-                mei: "ユウト",
-                gender: "オス",
-                bloodType: "A",
-                rank: "A",
-                birthYear: "2010",
-                birthMonth: "3",
-                birthDay: "4",
-                crime: "強制わいせつ罪",
-                entryYear: "2024",
-                entryMonth: "3",
-                exitYear: "2034",
-                exitMonth: "1",
-                facility: "栃木県黒羽分院",
-                photo: "https://houkagakuen.github.io/databank/search/portrait/IMG_0946.jpeg"
-            }
+            // 他の生徒情報も同様に追加
         ];
 
-        // 検索処理
         function search() {
             const lastName = document.getElementById("lastName").value.toLowerCase();
             const firstName = document.getElementById("firstName").value.toLowerCase();
@@ -396,15 +216,7 @@
             const gender = document.getElementById("gender").value;
             const bloodType = document.getElementById("bloodType").value;
             const rank = document.getElementById("rank").value;
-            const facilityFilters = [
-                document.getElementById("nagoya").checked && "名古屋本院",
-                document.getElementById("tochigi").checked && "栃木県黒羽分院",
-                document.getElementById("kobe").checked && "兵庫県神戸第３分院",
-                document.getElementById("hiroshima").checked && "広島県広島第４分院",
-                document.getElementById("fukuoka").checked && "福岡県福岡第５分院"
-            ].filter(Boolean);
 
-            // 結果表示用
             const results = students.filter(student => {
                 return (
                     (lastName === "" || student.lastName.toLowerCase().includes(lastName)) &&
@@ -413,12 +225,10 @@
                     (mei === "" || student.mei.toLowerCase().includes(mei)) &&
                     (gender === "" || student.gender === gender) &&
                     (bloodType === "" || student.bloodType === bloodType) &&
-                    (rank === "" || student.rank === rank) &&
-                    (facilityFilters.length === 0 || facilityFilters.includes(student.facility))
+                    (rank === "" || student.rank === rank)
                 );
-            }).sort((a, b) => a.id - b.id); // 番号が若い順にソート
+            }).sort((a, b) => a.id - b.id);
 
-            // 結果表示エリアの更新
             const resultsDiv = document.getElementById("results");
             resultsDiv.innerHTML = "";
 
@@ -436,7 +246,7 @@
                             <div>氏名：${student.lastName}${student.firstName}</div>
                             <div>カナ：${student.sei}${student.mei}</div>
                             <div>性別：${student.gender}</div>
-                            <div>施設：${student.facility}</div>
+                            <div>階級：${student.rank}</div>
                             <div>罪名：${student.crime}</div>
                         </div>
                     `;
