@@ -1,1 +1,130 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>101水川惺</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #006400;
+            color: #ffffff;
+            padding: 10px;
+            text-align: center;
+            font-size: 24px;
+        }
+        .container {
+            padding: 10px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .profile {
+            display: flex;
+            gap: 10px;
+        }
+        .profile img {
+            width: 180px;
+            height: 255px; /* 1:1.414 に調整 */
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .profile-info {
+            flex: 1;
+        }
+        .profile-info h2 {
+            margin-top: 0;
+        }
+        .chart-container {
+            flex: 1;
+        }
+        .section {
+            margin-top: 20px;
+        }
+        .section h2 {
+            border-bottom: 2px solid #006400;
+            padding-bottom: 5px;
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+        .chart-container canvas {
+            display: block;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        101水川惺
+    </header>
+    <div class="container">
+        <div class="profile">
+            <img src="https://houkagakuen.github.io/databank/search/101%E6%B0%B4%E5%B7%9D%E6%83%BA/101%E6%B0%B4%E5%B7%9D%E6%83%BA.JPG" alt="水川 惺の肖像">
+            <div class="profile-info">
+                <h2>囚人番号: 102</h2>
+                <p><strong>名前:</strong> 藤井 彩世 (フジイ アヤセ)</p>
+                <p><strong>性別:</strong> メス</p>
+                <p><strong>血液型:</strong> O</p>
+                <p><strong>階級:</strong> A</p>
+                <p><strong>生年月日:</strong> 2010年10月9日</p>
+                <p><strong>罪名:</strong> 有印公文書偽造</p>
+                <p><strong>収容:</strong> 2023年7月 ~ 2026年7月</p>
+            </div>
+            <div class="chart-container">
+                <canvas id="radarChart" width="400" height="400"></canvas>
+            </div>
+        </div>
+        <div class="section">
+            <h2>逮捕の経緯</h2>
+            <p>101号は、部活で資料作成を任されており、そのスピードの速さと見やすさを顧問や部員に褒められたことがきっかけとなり、文書作成に興味を持ち始めた。当初は部活内での企画書等の文書作成のみを行なっていたが、次第に公的文書にも興味を持ち、インターネット上のテンプレートを活用して、結婚届を始め様々な文書を作成した。友人に見せるだけでは飽き足らず、実際に使って見たいという欲望が抑えられなくなり、偽造した書類が地域の公共施設の利用許可証として使用され、それが元で施設の運営に混乱をきたしたことから、犯行が発覚。自宅から数々の偽造された公文書が押収され逮捕。</p>
+        </div>
+        <div class="section">
+            <h2>懲罰履歴</h2>
+            <p>
+                2024/11/12 : 第二機械工場で301号と喧嘩。7日間懲罰。<br>
+                2024/07/07 : 昼食時に301号の七夕ゼリーを盗み食い。3日間懲罰<br>
+                2023/09/30 : 雑居房でいじめ発覚。連帯責任で31日間懲罰。
+            </p>
 
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctx = document.getElementById('radarChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'radar',
+            data: {
+                labels: ['体力', '知能', '協調性', '攻撃性', '適応力'],
+                datasets: [
+                    {
+                        label: '平均',
+                        data: [3, 3, 3, 3, 3],
+                        borderColor: 'black',
+                        backgroundColor: 'rgba(0, 0, 0, 0.1)',
+                    },
+                    {
+                        label: '102号',
+                        data: [4, 5, 3, 2, 4],
+                        borderColor: '#006400',
+                        backgroundColor: 'rgba(0, 100, 0, 0.5)',
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    r: {
+                        beginAtZero: true,
+                        max: 5
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
