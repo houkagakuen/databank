@@ -1,1 +1,130 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>103別役日菜</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #006400;
+            color: #ffffff;
+            padding: 10px;
+            text-align: center;
+            font-size: 24px;
+        }
+        .container {
+            padding: 10px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .profile {
+            display: flex;
+            gap: 10px;
+        }
+        .profile img {
+            width: 180px;
+            height: 255px; /* 1:1.414 に調整 */
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .profile-info {
+            flex: 1;
+        }
+        .profile-info h2 {
+            margin-top: 0;
+        }
+        .chart-container {
+            flex: 1;
+        }
+        .section {
+            margin-top: 20px;
+        }
+        .section h2 {
+            border-bottom: 2px solid #006400;
+            padding-bottom: 5px;
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+        .chart-container canvas {
+            display: block;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        103別役日菜
+    </header>
+    <div class="container">
+        <div class="profile">
+            <img src="https://houkagakuen.github.io/databank/search/102%E8%97%/A4%E4%BA%95%E5%BD%A9%E4%B8%96/102%E8%97%A4%E4%BA%95%E5%BD%A9%E4%B8%96.JPG" alt="肖像">
+            <div class="profile-info">
+                <h2>呼称番号: 103</h2>
+                <p><strong>名前:</strong> 別役日菜(bべべべべべべべべべべべべべべっちゃく)</p>
+                <p><strong>性別:</strong> メス</p>
+                <p><strong>血液型:</strong> O</p>
+                <p><strong>階級:</strong> A</p>
+                <p><strong>生年月日:</strong> 2010年10月9日</p>
+                <p><strong>罪名:</strong> 窃盗</p>
+                <p><strong>収容:</strong> 2024/1 ~ 2026/12</p>
+            </div>
+            <div class="chart-container">
+                <canvas id="radarChart" width="400" height="400"></canvas>
+            </div>
+        </div>
+        <div class="section">
+            <h2>逮捕の経緯</h2>
+            <p>102号は、学校の文化祭準備で忙しい中、友人との遊びの一環として、小さな盗みを繰り返していた。最初はちょっとしたお菓子や文房具を取ってみただけだったが、次第にその行為に依存するようになり、気づけば家計に困っている家庭のものまで盗むようになった。最初の頃は、盗んだものをすぐに使って楽しむだけで済んでいたが、次第に「もっと高価なものを手に入れたい」という欲望が強くなっていった。インターネットで様々な手口を学び、徐々にその盗み方も巧妙になった。ある日、近所の商店街で高級バッグを盗み、そのバッグを売り払おうとした際に警察に追われ、最終的に捕まった。犯行の際、店内の監視カメラに映っていたことが決定的な証拠となり、逮捕。</p>
+        </div>
+        <div class="section">
+            <h2>懲罰履歴</h2>
+            <p>
+                2024/11/30 : トイレでオナニーが発覚。180日間厳重懲罰。<br>
+                2024/05/13 : 職員の指示に従わなかったとして60日間懲罰。<br>
+                2024/01/27 : 第三機械工場で失神。作業を中断したとして10日間懲罰。
+            </p>
 
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctx = document.getElementById('radarChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'radar',
+            data: {
+                labels: ['体力', '知能', '協調性', '攻撃性', '適応力'],
+                datasets: [
+                    {
+                        label: '平均',
+                        data: [3, 3, 3, 3, 3],
+                        borderColor: 'black',
+                        backgroundColor: 'rgba(0, 0, 0, 0.1)',
+                    },
+                    {
+                        label: '103号',
+                        data: [5, 5, 3, 1, 4],
+                        borderColor: '#006400',
+                        backgroundColor: 'rgba(0, 100, 0, 0.5)',
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    r: {
+                        beginAtZero: true,
+                        max: 5
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
