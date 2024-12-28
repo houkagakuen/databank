@@ -1,1 +1,133 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>囚人個人詳細ページ - 101 水川 惺</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #006400;
+            color: #ffffff;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .profile {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .profile img {
+            width: 200px;
+            height: auto;
+            border-radius: 8px;
+        }
+        .profile-info {
+            flex: 1;
+        }
+        .profile-info h2 {
+            margin-top: 0;
+        }
+        .chart-container {
+            margin-top: 20px;
+        }
+        .chart-container canvas {
+            display: block;
+            margin: 0 auto;
+        }
+        .legend {
+            text-align: center;
+            margin-top: 10px;
+        }
+        .legend span {
+            display: inline-block;
+            margin: 0 10px;
+        }
+        .legend span::before {
+            content: "";
+            display: inline-block;
+            width: 20px;
+            height: 10px;
+            margin-right: 5px;
+        }
+        .legend .average::before {
+            background-color: black;
+        }
+        .legend .performance::before {
+            background-color: #ff69b4;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>囚人詳細情報 - 101 水川 惺</h1>
+    </header>
+    <div class="container">
+        <div class="profile">
+            <img src="https://houkagakuen.github.io/databank/search/101%E6%B0%B4%E5%B7%9D%E6%83%BA/101%E6%B0%B4%E5%B7%9D%E6%83%BA.JPG" alt="水川 惺の肖像">
+            <div class="profile-info">
+                <h2>囚人番号: 101</h2>
+                <p><strong>名前:</strong> 水川 惺 (ミズカワ セイ)</p>
+                <p><strong>性別:</strong> メス</p>
+                <p><strong>血液型:</strong> A</p>
+                <p><strong>階級:</strong> A</p>
+                <p><strong>生年月日:</strong> 2009年12月7日</p>
+                <p><strong>罪名:</strong> 有印公文書偽造</p>
+                <p><strong>入所期間:</strong> 2023年7月 ~ 2026年7月</p>
+            </div>
+        </div>
+        <div class="chart-container">
+            <h2>能力レベル</h2>
+            <canvas id="radarChart" width="400" height="400"></canvas>
+            <div class="legend">
+                <span class="average">平均 (黒)</span>
+                <span class="performance">101号 (赤ピンク)</span>
+            </div>
+        </div>
+    </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctx = document.getElementById('radarChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'radar',
+            data: {
+                labels: ['体力', '知能', '協調性', '攻撃性', '適応力'],
+                datasets: [
+                    {
+                        label: '平均',
+                        data: [3, 3, 3, 3, 3],
+                        borderColor: 'black',
+                        backgroundColor: 'rgba(0, 0, 0, 0.1)',
+                    },
+                    {
+                        label: '101号',
+                        data: [4, 5, 3, 2, 4],
+                        borderColor: '#ff69b4',
+                        backgroundColor: 'rgba(255, 105, 180, 0.5)',
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    r: {
+                        beginAtZero: true,
+                        max: 5
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
