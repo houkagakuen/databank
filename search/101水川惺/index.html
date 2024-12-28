@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>101 水川 惺</title>
+    <title>101水川惺</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -20,17 +20,17 @@
             font-size: 24px;
         }
         .container {
-            padding: 20px;
-            max-width: 800px;
+            padding: 10px;
+            max-width: 900px;
             margin: 0 auto;
         }
         .profile {
             display: flex;
-            gap: 20px;
+            gap: 10px;
         }
         .profile img {
-            width: 200px;
-            aspect-ratio: 1 / 1.414;
+            width: 180px;
+            height: 255px; /* 1:1.414 に調整 */
             object-fit: cover;
             border-radius: 8px;
         }
@@ -44,7 +44,7 @@
             flex: 1;
         }
         .section {
-            margin-top: 30px;
+            margin-top: 20px;
         }
         .section h2 {
             border-bottom: 2px solid #006400;
@@ -60,7 +60,7 @@
 </head>
 <body>
     <header>
-        101 水川 惺
+        101水川惺
     </header>
     <div class="container">
         <div class="profile">
@@ -76,7 +76,6 @@
                 <p><strong>入所期間:</strong> 2023年7月 ~ 2026年7月</p>
             </div>
             <div class="chart-container">
-                <h2>能力レベル</h2>
                 <canvas id="radarChart" width="400" height="400"></canvas>
             </div>
         </div>
@@ -107,8 +106,8 @@
                     {
                         label: '101号',
                         data: [4, 5, 3, 2, 4],
-                        borderColor: '#ff69b4',
-                        backgroundColor: 'rgba(255, 105, 180, 0.5)',
+                        borderColor: '#006400',
+                        backgroundColor: 'rgba(0, 100, 0, 0.5)',
                     }
                 ]
             },
