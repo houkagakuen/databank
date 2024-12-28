@@ -176,6 +176,28 @@
         <input type="text" id="id" class="rectangle">
     </div>
 
+    <div class="label-row">
+        <span>生年</span>
+        <input type="text" id="birthYear" class="rectangle">
+        <span>生月</span>
+        <input type="text" id="birthMonth" class="rectangle">
+        <span>生日</span>
+        <input type="text" id="birthDay" class="rectangle">
+        <span>罪名</span>
+        <input type="text" id="crime" class="rectangle">
+    </div>
+
+    <div class="label-row">
+        <span>入年</span>
+        <input type="text" id="entryYear" class="rectangle">
+        <span>入月</span>
+        <input type="text" id="entryMonth" class="rectangle">
+        <span>退年</span>
+        <input type="text" id="exitYear" class="rectangle">
+        <span>退月</span>
+        <input type="text" id="exitMonth" class="rectangle">
+    </div>
+
     <div class="search-row">
         <button class="search-button" onclick="search()">検　索</button>
     </div>
@@ -223,6 +245,15 @@
             const gender = document.getElementById("gender").value;
             const bloodType = document.getElementById("bloodType").value;
             const rank = document.getElementById("rank").value;
+            const id = document.getElementById("id").value.toLowerCase();
+            const birthYear = document.getElementById("birthYear").value.toLowerCase();
+            const birthMonth = document.getElementById("birthMonth").value.toLowerCase();
+            const birthDay = document.getElementById("birthDay").value.toLowerCase();
+            const crime = document.getElementById("crime").value.toLowerCase();
+            const entryYear = document.getElementById("entryYear").value.toLowerCase();
+            const entryMonth = document.getElementById("entryMonth").value.toLowerCase();
+            const exitYear = document.getElementById("exitYear").value.toLowerCase();
+            const exitMonth = document.getElementById("exitMonth").value.toLowerCase();
 
             const results = students.filter(student => {
                 return (
@@ -232,7 +263,16 @@
                     (mei === "" || student.mei.toLowerCase().includes(mei)) &&
                     (gender === "" || student.gender === gender) &&
                     (bloodType === "" || student.bloodType === bloodType) &&
-                    (rank === "" || student.rank === rank)
+                    (rank === "" || student.rank === rank) &&
+                    (id === "" || student.id.toLowerCase().includes(id)) &&
+                    (birthYear === "" || student.birthYear.toLowerCase().includes(birthYear)) &&
+                    (birthMonth === "" || student.birthMonth.toLowerCase().includes(birthMonth)) &&
+                    (birthDay === "" || student.birthDay.toLowerCase().includes(birthDay)) &&
+                    (crime === "" || student.crime.toLowerCase().includes(crime)) &&
+                    (entryYear === "" || student.entryYear.toLowerCase().includes(entryYear)) &&
+                    (entryMonth === "" || student.entryMonth.toLowerCase().includes(entryMonth)) &&
+                    (exitYear === "" || student.exitYear.toLowerCase().includes(exitYear)) &&
+                    (exitMonth === "" || student.exitMonth.toLowerCase().includes(exitMonth))
                 );
             }).sort((a, b) => a.id - b.id);
 
